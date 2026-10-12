@@ -301,7 +301,6 @@
             localStorage.setItem('hk_tea_timeline_data', JSON.stringify(currentTimeline));
         }
 
-        // 세로 4:3 비율(aspect-[3/4])이 적용된 스팟 카드 렌더링
         function renderSpots() {
             const container = document.getElementById('spots-grid');
             container.innerHTML = '';
@@ -311,7 +310,6 @@
                 card.className = "bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm flex flex-col justify-between";
                 card.innerHTML = `
                     <div>
-                        <!-- 세로 4:3 비율(aspect-[3/4]) 적용 -->
                         <div class="relative w-full aspect-[3/4] bg-stone-100 overflow-hidden">
                             <img src="${spot.img}" alt="${spot.name}" class="w-full h-full object-cover">
                             <button onclick="triggerSpotImageChange('${spot.id}')" class="absolute top-2.5 right-2.5 bg-black/70 active:bg-black text-white text-[11px] px-2.5 py-1.5 rounded-lg backdrop-blur-md font-medium transition flex items-center gap-1 touch-btn">
@@ -376,7 +374,7 @@
             reader.readAsDataURL(file);
         }
 
-        // 타임라인 렌더링 (미디어 슬라이더도 세로 4:3 비율 aspect-[3/4] 적용)
+        // 타임라인 렌더링 (시간 텍스트 한 줄 정렬 및 아이콘 버튼화 적용)
         function renderTimeline(filterDayVal) {
             const container = document.getElementById('timeline-container');
             container.innerHTML = '';
@@ -392,7 +390,6 @@
                 let mediaHtml = '';
                 if (item.media && item.media.length > 0) {
                     mediaHtml = `
-                        <!-- 타임라인 사진/영상 슬라이더에도 세로 4:3 비율(aspect-[3/4]) 적용 -->
                         <div class="relative w-full aspect-[3/4] bg-stone-900 rounded-xl overflow-hidden mt-3" id="slider-${item.id}">
                             <div class="absolute inset-0 flex items-center transition-transform duration-300 ease-out slider-track-${item.id}" style="display: flex;">
                                 ${item.media.map((m, idx) => `
@@ -423,11 +420,13 @@
                     </div>
                     <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm space-y-2.5">
                         <div class="flex items-center justify-between gap-2">
-                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${item.bg} tracking-tight">
-                                🗓️ ${item.day} &nbsp;|&nbsp; ⏰ ${item.time}
+                            <!-- 날짜와 시간이 줄바꿈 없이 한 줄로 깔끔하게 정렬되도록 수정 -->
+                            <span class="text-xs font-bold px-2.5 py-1.5 rounded-lg ${item.bg} tracking-tight whitespace-nowrap">
+                                📅 ${item.day} &nbsp;|&nbsp; ⏰ ${item.time}
                             </span>
-                            <button onclick="triggerTimelineMediaUpload('${item.id}')" class="text-xs bg-emerald-50 text-emerald-800 font-medium px-2.5 py-1.5 rounded-lg border border-emerald-200 active:bg-emerald-100 transition flex items-center gap-1 touch-btn">
-                                <span>📷</span> 사진/동영상 추가
+                            <!-- 텍스트를 제거하고 카메라 아이콘만 남기도록 수정 -->
+                            <button onclick="triggerTimelineMediaUpload('${item.id}')" title="사진/동영상 추가" class="w-10 h-10 bg-emerald-50 text-emerald-800 font-medium rounded-xl border border-emerald-200 active:bg-emerald-100 transition flex items-center justify-center text-base shrink-0 touch-btn">
+                                📷
                             </button>
                         </div>
                         <div>
