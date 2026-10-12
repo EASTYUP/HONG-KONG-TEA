@@ -44,11 +44,11 @@
             <h1 class="serif text-2xl font-bold mb-1 tracking-tight leading-tight">
                 아차茶! 정기다회
             </h1>
-            <p class="serif text-base text-emerald-200/90 font-light mb-5">
+            <p class="serif text-base text-emerald-200/90 font-light mb-4">
                 - 즉흥 홍콩 여행 편 -
             </p>
             
-            <div class="grid grid-cols-1 gap-2 text-xs text-stone-300 bg-white/5 border border-white/10 rounded-xl p-3.5 backdrop-blur-md text-left">
+            <div class="grid grid-cols-1 gap-2 text-xs text-stone-300 bg-white/5 border border-white/10 rounded-xl p-3.5 backdrop-blur-md text-left mb-4">
                 <div class="flex items-center gap-2">
                     <span>📅</span>
                     <span class="font-medium text-white">2026.10.16</span>
@@ -63,6 +63,11 @@
                     <span class="font-medium text-emerald-300">@SOLTEA_TIME</span>
                 </div>
             </div>
+
+            <!-- 전체 지도 보기 버튼 링크 -->
+            <a href="./map.html" class="inline-flex items-center justify-center gap-1.5 w-full bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold py-3 px-4 rounded-xl shadow transition touch-btn border border-emerald-700">
+                <span>🗺️</span> 홍콩 스팟 전체 지도 한눈에 보기
+            </a>
         </div>
     </header>
 
@@ -73,7 +78,7 @@
         <div class="bg-emerald-900 text-emerald-100 p-3.5 rounded-xl shadow-sm text-xs flex items-start justify-between gap-2 border border-emerald-800">
             <div class="flex items-start gap-2">
                 <span class="text-sm shrink-0">💡</span>
-                <span class="leading-relaxed"><strong>인스타형 갤러리:</strong> 각 스팟 및 일정 카드에서 여러 장의 사진과 동영상을 추가하여 슬라이드로 감상할 수 있습니다.</span>
+                <span class="leading-relaxed"><strong>인스타형 갤러리:</strong> 각 스팟 및 일정 카드에서 사진과 동영상을 추가해 슬라이드로 넘겨볼 수 있습니다.</span>
             </div>
             <button onclick="resetAllData()" class="text-[11px] underline text-emerald-300 shrink-0 touch-btn flex items-center">초기화</button>
         </div>
@@ -85,9 +90,6 @@
                     <h2 class="serif text-xl font-bold text-stone-900">🍵 홍콩 주요 찻집 &amp; 스팟</h2>
                     <p class="text-[11px] text-stone-500 mt-0.5">홍콩의 명소와 추천 찻집 리스트</p>
                 </div>
-                <button onclick="switchTab('add')" class="text-xs font-semibold bg-emerald-800 text-white px-3 py-2 rounded-xl active:bg-emerald-900 transition touch-btn flex items-center">
-                    + 카드 추가
-                </button>
             </div>
 
             <div id="spots-grid" class="space-y-4">
@@ -95,11 +97,13 @@
             </div>
         </section>
 
-        <!-- SECTION 2: 일정 타임라인 (인스타형 미디어 슬라이더 적용) -->
+        <!-- SECTION 2: 일정 타임라인 (가독성 및 시간 흐름 강화) -->
         <section id="section-timeline" class="space-y-4">
-            <div>
-                <h2 class="serif text-xl font-bold text-stone-900">🗓️ 3박 4일 일정 타임라인</h2>
-                <p class="text-[11px] text-stone-500 mt-0.5">일정별 사진/동영상 갤러리 추가 가능</p>
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="serif text-xl font-bold text-stone-900">🗓️ 3박 4일 일정 타임라인</h2>
+                    <p class="text-[11px] text-stone-500 mt-0.5">시간순 여정과 미디어 아카이브</p>
+                </div>
             </div>
 
             <!-- 날짜 필터 -->
@@ -112,43 +116,10 @@
                 <button onclick="filterDay('8/19')" class="day-btn bg-white border border-stone-300 text-stone-700 px-3.5 py-2 rounded-xl shrink-0 transition touch-btn flex items-center" data-day="8/19">8/19(화)</button>
             </div>
 
-            <div id="timeline-container" class="space-y-4">
+            <!-- 타임라인 리스트 (세로 라인 및 시간 강조) -->
+            <div id="timeline-container" class="space-y-3 relative before:absolute before:top-2 before:bottom-2 before:left-4 before:w-0.5 before:bg-stone-300">
                 <!-- 동적 로드 -->
             </div>
-        </section>
-
-        <!-- SECTION 3: 새 스팟 추가 폼 -->
-        <section id="section-add" class="bg-white rounded-2xl border border-stone-200 p-5 shadow-sm space-y-4">
-            <div>
-                <h3 class="serif text-lg font-bold text-stone-900">➕ 새 사진 카드 추가</h3>
-                <p class="text-[11px] text-stone-500 mt-0.5">다녀오신 장소나 찍은 사진을 등록해 보세요.</p>
-            </div>
-            
-            <form onsubmit="addNewSpot(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-medium text-stone-700 mb-1">장소/스팟 이름 *</label>
-                    <input type="text" id="new-name" required placeholder="예: 록차 티하우스" class="w-full border border-stone-300 rounded-xl px-3 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-700">
-                </div>
-                <div>
-                    <label class="block font-medium text-stone-700 mb-1">태그/카테고리</label>
-                    <input type="text" id="new-tag" placeholder="예: 찻집 / 센트럴" class="w-full border border-stone-300 rounded-xl px-3 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-700">
-                </div>
-                <div>
-                    <label class="block font-medium text-stone-700 mb-1">메모 / 소감</label>
-                    <textarea id="new-desc" rows="3" placeholder="이 장소에서 맛본 차나 소감을 적어보세요." class="w-full border border-stone-300 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-700"></textarea>
-                </div>
-                <div>
-                    <label class="block font-medium text-stone-700 mb-1">구글 지도 링크 (선택)</label>
-                    <input type="url" id="new-map" placeholder="https://maps.google.com/..." class="w-full border border-stone-300 rounded-xl px-3 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-700">
-                </div>
-                <div>
-                    <label class="block font-medium text-stone-700 mb-1">대표 사진 선택</label>
-                    <input type="file" id="new-img" accept="image/*" class="w-full text-stone-500 file:mr-2 file:py-2.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:bg-emerald-50 file:text-emerald-800 font-medium">
-                </div>
-                <button type="submit" class="w-full bg-[#2a3630] active:bg-[#1d2722] text-white font-medium py-3.5 rounded-xl transition text-xs touch-btn">
-                    카드 생성 및 저장하기
-                </button>
-            </form>
         </section>
 
     </main>
@@ -164,10 +135,10 @@
                 <span class="text-lg">🗓️</span>
                 <span class="text-[10px] mt-0.5">3박4일 일정</span>
             </button>
-            <button onclick="switchTab('add')" id="nav-add" class="flex-1 py-2 flex flex-col items-center justify-center text-stone-500 touch-btn">
-                <span class="text-lg">➕</span>
-                <span class="text-[10px] mt-0.5">사진 추가</span>
-            </button>
+            <a href="./map.html" class="flex-1 py-2 flex flex-col items-center justify-center text-stone-500 touch-btn">
+                <span class="text-lg">🗺️</span>
+                <span class="text-[10px] mt-0.5">전체 지도</span>
+            </a>
         </div>
     </nav>
 
@@ -182,7 +153,6 @@
     <input type="file" id="global-timeline-media-input" accept="image/*,video/*" multiple class="hidden" onchange="handleTimelineMediaUpload(event)">
 
     <script>
-        // 기본 주요 스팟 데이터
         const defaultSpots = [
             {
                 id: "spot-1",
@@ -266,7 +236,6 @@
             }
         ];
 
-        // 기본 타임라인 데이터 (media 배열 기본 포함)
         const defaultTimeline = [
             { id: "t-1", day: "8/15", time: "PM 05:20", title: "공항 도착", desc: "인천국제공항 도착 및 탑승 수속", icon: "✈️", bg: "bg-blue-50 text-blue-700", media: [] },
             { id: "t-2", day: "8/15", time: "PM 08:05", title: "티웨이 항공 출국", desc: "인천(ICN) ➔ 홍콩(HKG) 출발", icon: "🛫", bg: "bg-blue-50 text-blue-700", media: [] },
@@ -312,14 +281,12 @@
         let selectedSpotIdForImage = null;
         let selectedTimelineIdForMedia = null;
 
-        // 페이지 로드
         window.addEventListener('DOMContentLoaded', () => {
             loadData();
             renderSpots();
             renderTimeline('all');
         });
 
-        // 데이터 로드 (LocalStorage)
         function loadData() {
             const savedSpots = localStorage.getItem('hk_tea_spots_data');
             currentSpots = savedSpots ? JSON.parse(savedSpots) : [...defaultSpots];
@@ -336,7 +303,6 @@
             localStorage.setItem('hk_tea_timeline_data', JSON.stringify(currentTimeline));
         }
 
-        // 스팟 렌더링
         function renderSpots() {
             const container = document.getElementById('spots-grid');
             container.innerHTML = '';
@@ -372,17 +338,13 @@
             });
         }
 
-        // 탭 전환
         function switchTab(tabName) {
             const sectionSpots = document.getElementById('section-spots');
             const sectionTimeline = document.getElementById('section-timeline');
-            const sectionAdd = document.getElementById('section-add');
-
             const navSpots = document.getElementById('nav-spots');
             const navTimeline = document.getElementById('nav-timeline');
-            const navAdd = document.getElementById('nav-add');
 
-            [navSpots, navTimeline, navAdd].forEach(btn => btn.classList.remove('active-tab'));
+            [navSpots, navTimeline].forEach(btn => btn?.classList.remove('active-tab'));
 
             if (tabName === 'spots') {
                 sectionSpots.scrollIntoView({ behavior: 'smooth' });
@@ -390,13 +352,9 @@
             } else if (tabName === 'timeline') {
                 sectionTimeline.scrollIntoView({ behavior: 'smooth' });
                 navTimeline.classList.add('active-tab');
-            } else if (tabName === 'add') {
-                sectionAdd.scrollIntoView({ behavior: 'smooth' });
-                navAdd.classList.add('active-tab');
             }
         }
 
-        // 스팟 사진 변경
         function triggerSpotImageChange(id) {
             selectedSpotIdForImage = id;
             document.getElementById('global-card-img-input').click();
@@ -418,38 +376,7 @@
             reader.readAsDataURL(file);
         }
 
-        // 새 스팟 추가
-        function addNewSpot(event) {
-            event.preventDefault();
-            const name = document.getElementById('new-name').value;
-            const tag = document.getElementById('new-tag').value;
-            const desc = document.getElementById('new-desc').value;
-            const map = document.getElementById('new-map').value;
-            const imgFile = document.getElementById('new-img').files[0];
-
-            const newId = 'spot-' + Date.now();
-
-            if (imgFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    currentSpots.unshift({ id: newId, name, tag, desc, map, img: e.target.result });
-                    saveSpots();
-                    renderSpots();
-                    event.target.reset();
-                    switchTab('spots');
-                };
-                reader.readAsDataURL(imgFile);
-            } else {
-                const defaultImg = "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80";
-                currentSpots.unshift({ id: newId, name, tag, desc, map, img: defaultImg });
-                saveSpots();
-                renderSpots();
-                event.target.reset();
-                switchTab('spots');
-            }
-        }
-
-        // 타임라인 렌더링 (인스타형 갤러리 슬라이더 포함)
+        // 타임라인 렌더링 (가독성과 시간 흐름 강조 구조)
         function renderTimeline(filterDayVal) {
             const container = document.getElementById('timeline-container');
             container.innerHTML = '';
@@ -460,13 +387,12 @@
 
             items.forEach((item) => {
                 const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-2xl border border-stone-200 shadow-sm space-y-3";
+                card.className = "relative pl-8 group";
 
-                // 미디어 슬라이더 HTML 생성
                 let mediaHtml = '';
                 if (item.media && item.media.length > 0) {
                     mediaHtml = `
-                        <div class="relative w-full h-48 bg-stone-900 rounded-xl overflow-hidden group" id="slider-${item.id}">
+                        <div class="relative w-full h-48 bg-stone-900 rounded-xl overflow-hidden mt-3" id="slider-${item.id}">
                             <div class="absolute inset-0 flex items-center transition-transform duration-300 ease-out slider-track-${item.id}" style="display: flex;">
                                 ${item.media.map((m, idx) => `
                                     <div class="w-full h-full shrink-0 relative flex items-center justify-center bg-black">
@@ -491,26 +417,31 @@
                 }
 
                 card.innerHTML = `
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-base">${item.icon}</span>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${item.bg}">${item.day} ${item.time}</span>
+                    <!-- 타임라인 아이콘 핀 -->
+                    <div class="absolute left-1.5 top-0 w-6 h-6 rounded-full bg-[#2a3630] border-2 border-white text-white text-[10px] flex items-center justify-center shadow z-10">
+                        ${item.icon}
+                    </div>
+                    <!-- 카드 박스 -->
+                    <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm space-y-2.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${item.bg} tracking-tight">
+                                🗓️ ${item.day} &nbsp;|&nbsp; ⏰ ${item.time}
+                            </span>
+                            <button onclick="triggerTimelineMediaUpload('${item.id}')" class="text-xs bg-emerald-50 text-emerald-800 font-medium px-2.5 py-1.5 rounded-lg border border-emerald-200 active:bg-emerald-100 transition flex items-center gap-1 touch-btn">
+                                <span>📷</span> 사진/동영상 추가
+                            </button>
                         </div>
-                        <button onclick="triggerTimelineMediaUpload('${item.id}')" class="text-xs bg-emerald-50 text-emerald-800 font-medium px-2.5 py-1.5 rounded-lg border border-emerald-200 active:bg-emerald-100 transition flex items-center gap-1 touch-btn">
-                            <span>📷</span> 사진/동영상 추가
-                        </button>
+                        <div>
+                            <h4 class="font-bold text-stone-900 text-sm mb-1">${item.title}</h4>
+                            <p class="text-xs text-stone-600 leading-relaxed">${item.desc}</p>
+                        </div>
+                        ${mediaHtml}
                     </div>
-                    <div>
-                        <h4 class="font-bold text-stone-900 text-sm mb-1">${item.title}</h4>
-                        <p class="text-xs text-stone-600 leading-relaxed">${item.desc}</p>
-                    </div>
-                    ${mediaHtml}
                 `;
                 container.appendChild(card);
             });
         }
 
-        // 타임라인 미디어 슬라이드 제어
         window.slideStates = {};
         function slideMedia(itemId, direction) {
             const item = currentTimeline.find(t => t.id === itemId);
@@ -534,13 +465,11 @@
             }
         }
 
-        // 타임라인 미디어 업로드 트리거
         function triggerTimelineMediaUpload(id) {
             selectedTimelineIdForMedia = id;
             document.getElementById('global-timeline-media-input').click();
         }
 
-        // 타임라인 미디어 파일 처리
         function handleTimelineMediaUpload(event) {
             const files = event.target.files;
             if (!files || files.length === 0 || !selectedTimelineIdForMedia) return;
@@ -563,14 +492,13 @@
                     if (processedCount === files.length) {
                         saveTimeline();
                         renderTimeline(document.querySelector('.day-btn.bg-\\[\\#2a3630\\]')?.getAttribute('data-day') || 'all');
-                        event.target.value = ''; // reset
+                        event.target.value = '';
                     }
                 };
                 reader.readAsDataURL(file);
             });
         }
 
-        // 타임라인 특정 미디어 삭제
         function deleteTimelineMedia(itemId, mediaIdx) {
             const item = currentTimeline.find(t => t.id === itemId);
             if (item && item.media) {
@@ -580,7 +508,6 @@
             }
         }
 
-        // 날짜 필터
         function filterDay(day) {
             document.querySelectorAll('.day-btn').forEach(btn => {
                 if (btn.getAttribute('data-day') === day) {
@@ -592,7 +519,6 @@
             renderTimeline(day);
         }
 
-        // 초기화
         function resetAllData() {
             if (confirm("모든 사진과 추가한 일정을 초기 상태로 돌리시겠습니까?")) {
                 localStorage.removeItem('hk_tea_spots_data');
@@ -604,6 +530,5 @@
             }
         }
     </script>
-    (href="./map.html")
 </body>
 </html>
