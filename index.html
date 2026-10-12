@@ -72,16 +72,7 @@
     </header>
 
     <!-- Main Mobile Container -->
-    <main class="max-w-md mx-auto px-4 -mt-4 relative z-20 space-y-6">
-
-        <!-- 안내 바 -->
-        <div class="bg-emerald-900 text-emerald-100 p-3.5 rounded-xl shadow-sm text-xs flex items-start justify-between gap-2 border border-emerald-800">
-            <div class="flex items-start gap-2">
-                <span class="text-sm shrink-0">💡</span>
-                <span class="leading-relaxed"><strong>인스타형 갤러리:</strong> 각 스팟 및 일정 카드에서 사진과 동영상을 추가해 슬라이드로 넘겨볼 수 있습니다.</span>
-            </div>
-            <button onclick="resetAllData()" class="text-[11px] underline text-emerald-300 shrink-0 touch-btn flex items-center">초기화</button>
-        </div>
+    <main class="max-w-md mx-auto px-4 pt-6 relative z-20 space-y-6">
 
         <!-- SECTION 1: 주요 스팟 카드 -->
         <section id="section-spots" class="space-y-4">
@@ -97,7 +88,7 @@
             </div>
         </section>
 
-        <!-- SECTION 2: 일정 타임라인 (가독성 및 시간 흐름 강화) -->
+        <!-- SECTION 2: 일정 타임라인 -->
         <section id="section-timeline" class="space-y-4">
             <div class="flex items-center justify-between">
                 <div>
@@ -116,7 +107,7 @@
                 <button onclick="filterDay('8/19')" class="day-btn bg-white border border-stone-300 text-stone-700 px-3.5 py-2 rounded-xl shrink-0 transition touch-btn flex items-center" data-day="8/19">8/19(화)</button>
             </div>
 
-            <!-- 타임라인 리스트 (세로 라인 및 시간 강조) -->
+            <!-- 타임라인 리스트 -->
             <div id="timeline-container" class="space-y-3 relative before:absolute before:top-2 before:bottom-2 before:left-4 before:w-0.5 before:bg-stone-300">
                 <!-- 동적 로드 -->
             </div>
@@ -376,7 +367,6 @@
             reader.readAsDataURL(file);
         }
 
-        // 타임라인 렌더링 (가독성과 시간 흐름 강조 구조)
         function renderTimeline(filterDayVal) {
             const container = document.getElementById('timeline-container');
             container.innerHTML = '';
@@ -417,11 +407,9 @@
                 }
 
                 card.innerHTML = `
-                    <!-- 타임라인 아이콘 핀 -->
                     <div class="absolute left-1.5 top-0 w-6 h-6 rounded-full bg-[#2a3630] border-2 border-white text-white text-[10px] flex items-center justify-center shadow z-10">
                         ${item.icon}
                     </div>
-                    <!-- 카드 박스 -->
                     <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm space-y-2.5">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${item.bg} tracking-tight">
@@ -517,17 +505,6 @@
                 }
             });
             renderTimeline(day);
-        }
-
-        function resetAllData() {
-            if (confirm("모든 사진과 추가한 일정을 초기 상태로 돌리시겠습니까?")) {
-                localStorage.removeItem('hk_tea_spots_data');
-                localStorage.removeItem('hk_tea_timeline_data');
-                currentSpots = [...defaultSpots];
-                currentTimeline = [...defaultTimeline];
-                renderSpots();
-                renderTimeline('all');
-            }
         }
     </script>
 </body>
