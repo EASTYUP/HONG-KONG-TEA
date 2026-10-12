@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>아차茶! 홍콩 여행 전체 지도 - 아카이브</title>
+    <title>아차茶! 홍콩 여행 일차별 여정 지도</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet OpenStreetMap CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
         body {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
@@ -20,6 +25,34 @@
         .touch-btn {
             min-height: 44px;
         }
+        #custom-map-container {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        /* 손그림 느낌 핀 스타일 */
+        .custom-marker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 11px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .day1-marker { background-color: #ef4444; } /* Red */
+        .day2-marker { background-color: #3b82f6; } /* Blue */
+        .day3-marker { background-color: #10b981; } /* Emerald */
     </style>
 </head>
 <body class="antialiased min-h-screen pb-20">
@@ -31,125 +64,85 @@
                 Tea Journey Map Archive
             </span>
             <h1 class="serif text-2xl font-bold mb-1 tracking-tight leading-tight">
-                홍콩 찻집 &amp; 스팟 전체 지도
+                홍콩 일차별 여정 지도
             </h1>
-            <p class="serif text-sm text-emerald-200/90 font-light mb-4">
-                - 아차茶! 정기다회 특별 지도 -
+            <p class="serif text-xs text-emerald-200/90 font-light mb-4">
+                - 스팟 연결선 &amp; 이동 동선 가이드 -
             </p>
             <a href="./index.html" class="inline-block text-xs bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2 rounded-xl transition border border-white/20">
-                ← 여행일지 및 메인으로 돌아가기
+                ← 여행일지 메인으로 돌아가기
             </a>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-md mx-auto px-4 -mt-4 relative z-20 space-y-6">
+    <main class="max-w-md mx-auto px-4 -mt-4 relative z-20 space-y-5">
 
-        <!-- Google Maps Embed Container (홍콩 중심 전체 지도) -->
+        <!-- 지도 카드 -->
         <section class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm p-4 space-y-3">
             <div class="flex items-center justify-between">
-                <h2 class="serif font-bold text-stone-900 text-sm">📍 홍콩 인터랙티브 전체 지도</h2>
-                <span class="text-[11px] text-emerald-800 font-medium">핀을 클릭해 확인하세요</span>
+                <h2 class="serif font-bold text-stone-900 text-sm">📍 일차별 스팟 &amp; 동선 그림 지도</h2>
+                <span class="text-[11px] text-stone-500">핀 터치시 상세 정보</span>
             </div>
-            
-            <div class="w-full h-80 bg-stone-100 rounded-xl overflow-hidden relative border border-stone-200">
-                <!-- Google Maps Embed (홍콩 침사추이/센트럴 중심) -->
-                <iframe 
-                    width="100%" 
-                    height="100%" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59158.46083550882!2d114.13328578601683!3d22.302711000000015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x340400c423f79027%3A0x2424888be62d6455!2zFRy11g5cTrw!5e0!3m2!1sko!2skr!4v1710000000000!5m2!1sko!2skr">
-                </iframe>
+
+            <!-- 일차별 범례 탭 -->
+            <div class="flex items-center justify-around bg-stone-100 p-2 rounded-xl text-xs font-semibold">
+                <div class="flex items-center gap-1.5 text-red-600">
+                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> 1일차 (8/16)
+                </div>
+                <div class="flex items-center gap-1.5 text-blue-600">
+                    <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> 2일차 (8/17)
+                </div>
+                <div class="flex items-center gap-1.5 text-emerald-600">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> 3일차 (8/18)
+                </div>
             </div>
-            <p class="text-[11px] text-stone-500 text-center leading-tight">
-                지도를 손가락으로 확대/축소하여 홍콩 전역의 찻집 위치를 탐색하실 수 있습니다.
+
+            <!-- 지도 영역 -->
+            <div id="custom-map-container" class="border border-stone-200 shadow-inner">
+                <div id="map"></div>
+            </div>
+
+            <p class="text-[11px] text-stone-500 text-center leading-relaxed">
+                각 날짜별로 방문했던 스팟들이 **선과 화살표**로 순서대로 연결되어 있습니다. 지도를 지느러미 드래그나 두 손가락으로 확대/축소해 보세요!
             </p>
         </section>
 
-        <!-- 방문 스팟 리스트 (바로가기 링크 포함) -->
+        <!-- 일차별 동선 요약 리스트 -->
         <section class="space-y-3">
-            <h3 class="serif font-bold text-stone-900 text-base">🏷️ 등록된 전체 스팟 목록</h3>
+            <h3 class="serif font-bold text-stone-900 text-base">🗓️ 일차별 방문 경로</h3>
             
-            <div class="space-y-2.5">
-                <!-- Spot 1 -->
-                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
-                    <div>
-                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">침사추이</span>
-                        <h4 class="font-bold text-stone-900 text-xs mt-1">中樂號茶莊 852Teahouse</h4>
-                    </div>
-                    <a href="https://maps.google.com/?cid=10734288072389957925" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
-                        지도보기
-                    </a>
+            <!-- 1일차 -->
+            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                    <h4 class="font-bold text-stone-900 text-xs">1일차 (8/16 토): 센트럴 &amp; 침사추이 찻집</h4>
                 </div>
+                <p class="text-[11px] text-stone-600 leading-relaxed pl-4">
+                    센트럴 ➔ 顏奇香茶莊 ➔ 祥興茶行 ➔ 다구문물관 ➔ 빅토리아 피크 ➔ 852Teahouse (침사추이)
+                </p>
+            </div>
 
-                <!-- Spot 2 -->
-                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
-                    <div>
-                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">삼수이포</span>
-                        <h4 class="font-bold text-stone-900 text-xs mt-1">SUM FONG TEA HOUSE 沁芳茶房</h4>
-                    </div>
-                    <a href="https://maps.google.com/?cid=11708138488825501377" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
-                        지도보기
-                    </a>
+            <!-- 2일차 -->
+            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                    <h4 class="font-bold text-stone-900 text-xs">2일차 (8/17 일): 청차우 섬 &amp; 몽콕 쇼핑</h4>
                 </div>
+                <p class="text-[11px] text-stone-600 leading-relaxed pl-4">
+                    센트럴 페리 선착장 ➔ 청차우 섬 (자전거) ➔ 몽콕 주방용품 거리 ➔ 852Teahouse 재방문
+                </p>
+            </div>
 
-                <!-- Spot 3 -->
-                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
-                    <div>
-                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">센트럴</span>
-                        <h4 class="font-bold text-stone-900 text-xs mt-1">Ngan Ki Heung Tea Co. (顏奇香茶莊)</h4>
-                    </div>
-                    <a href="https://maps.google.com/?cid=12140417933934390036" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
-                        지도보기
-                    </a>
+            <!-- 3일차 -->
+            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    <h4 class="font-bold text-stone-900 text-xs">3일차 (8/18 월): 공방 &amp; 삼수이포 찻집</h4>
                 </div>
-
-                <!-- Spot 4 -->
-                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
-                    <div>
-                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">상완</span>
-                        <h4 class="font-bold text-stone-900 text-xs mt-1">Cheung Hing Tea Hong (祥興茶行)</h4>
-                    </div>
-                    <a href="https://maps.google.com/?cid=13735165840656208031" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
-                        지도보기
-                    </a>
-                </div>
-
-                <!-- Spot 5 -->
-                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
-                    <div>
-                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">센트럴</span>
-                        <h4 class="font-bold text-stone-900 text-xs mt-1">Flagstaff House Museum of Tea Ware</h4>
-                    </div>
-                    <a href="https://maps.app.goo.gl/o1y51i3v2CmsdM7z8" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
-                        지도보기
-                    </a>
-                </div>
-
-                <!-- Spot 6 -->
-                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
-                    <div>
-                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">구룡베이</span>
-                        <h4 class="font-bold text-stone-900 text-xs mt-1">월동자창 (Yuet Tung China Works)</h4>
-                    </div>
-                    <a href="https://maps.app.goo.gl/bM5X7e1eBf9K8P5k6" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
-                        지도보기
-                    </a>
-                </div>
-
-                <!-- Spot 7 -->
-                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
-                    <div>
-                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">외곽 섬</span>
-                        <h4 class="font-bold text-stone-900 text-xs mt-1">청차우 섬 (Cheung Chau Island)</h4>
-                    </div>
-                    <a href="https://maps.app.goo.gl/a7A8M9v5bK3Z1P7S6" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
-                        지도보기
-                    </a>
-                </div>
+                <p class="text-[11px] text-stone-600 leading-relaxed pl-4">
+                    월동자창 (도자기 공방) ➔ 몽콕 거리 ➔ SUM FONG TEA HOUSE (삼수이포) ➔ 귀국
+                </p>
             </div>
         </section>
 
@@ -161,5 +154,76 @@
         <p>© 2026 SOLTEA_TIME. All rights reserved.</p>
     </footer>
 
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // 홍콩 중앙 좌표 설정
+            const map = L.map('map', {
+                zoomControl: false
+            }).setView([22.3100, 114.1650], 12);
+
+            // 타일 레이어 추가 (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            // 1일차 스팟 데이터 (빨간색)
+            const day1Spots = [
+                { name: "1. 센트럴 거리", lat: 22.2819, lng: 114.1581 },
+                { name: "2. 顏奇香茶莊 (Ngan Ki Heung)", lat: 22.2835, lng: 114.1528 },
+                { name: "3. 祥興茶行 (Cheung Hing)", lat: 22.2865, lng: 114.1485 },
+                { name: "4. 다구문물관 (Museum of Tea Ware)", lat: 22.2778, lng: 114.1618 },
+                { name: "5. 빅토리아 피크", lat: 22.2711, lng: 114.1498 },
+                { name: "6. 852Teahouse (침사추이)", lat: 22.2988, lng: 114.1722 }
+            ];
+
+            // 2일차 스팟 데이터 (파란색)
+            const day2Spots = [
+                { name: "1. 센트럴 페리 선착장", lat: 22.2871, lng: 114.1602 },
+                { name: "2. 청차우 섬", lat: 22.2070, lng: 114.0292 },
+                { name: "3. 몽콕 주방용품 거리", lat: 22.3193, lng: 114.1694 },
+                { name: "4. 852Teahouse", lat: 22.2988, lng: 114.1722 }
+            ];
+
+            // 3일차 스팟 데이터 (초록색)
+            const day3Spots = [
+                { name: "1. 월동자창 (구룡베이)", lat: 22.3235, lng: 114.2135 },
+                { name: "2. 몽콕 번화가", lat: 22.3193, lng: 114.1694 },
+                { name: "3. SUM FONG TEA HOUSE (삼수이포)", lat: 22.3308, lng: 114.1622 }
+            ];
+
+            // 스팟 마커 및 선 그리기 함수
+            function drawDayPath(spots, colorClass, strokeColor) {
+                const latLngs = spots.map(s => [s.lat, s.lng]);
+
+                // 스팟 마커 생성
+                spots.forEach((s, idx) => {
+                    const customIcon = L.divIcon({
+                        className: 'custom-div-icon',
+                        html: `<div class="custom-marker ${colorClass} w-6 h-6">${idx + 1}</div>`,
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    });
+
+                    L.marker([s.lat, s.lng], { icon: customIcon })
+                        .bindPopup(`<b>${s.name}</b>`)
+                        .addTo(map);
+                });
+
+                // 경로 연결선 그리기 (굵은 손그림 느낌 선)
+                L.polyline(latLngs, {
+                    color: strokeColor,
+                    weight: 4,
+                    opacity: 0.8,
+                    dashArray: '6, 6'
+                }).addTo(map);
+            }
+
+            // 1일차, 2일차, 3일차 연결선 및 마커 그리기
+            drawDayPath(day1Spots, 'day1-marker', '#ef4444');
+            drawDayPath(day2Spots, 'day2-marker', '#3b82f6');
+            drawDayPath(day3Spots, 'day3-marker', '#10b981');
+        });
+    </script>
 </body>
 </html>
