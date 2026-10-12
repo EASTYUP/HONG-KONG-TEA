@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>아차茶! 홍콩 여행 일차별 여정 지도</title>
+    <title>아차茶! 홍콩 여행 상세 여정 지도</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
         #custom-map-container {
             position: relative;
             width: 100%;
-            height: 420px;
+            height: 460px;
             border-radius: 1rem;
             overflow: hidden;
         }
@@ -37,7 +37,6 @@
             height: 100%;
             z-index: 1;
         }
-        /* 손그림 느낌 핀 스타일 */
         .custom-marker {
             display: flex;
             align-items: center;
@@ -50,6 +49,7 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.3);
             text-align: center;
         }
+        .hub-marker { background-color: #4b5563; } /* Gray for Airport/Hostel */
         .day1-marker { background-color: #ef4444; } /* Red */
         .day2-marker { background-color: #3b82f6; } /* Blue */
         .day3-marker { background-color: #10b981; } /* Emerald */
@@ -61,13 +61,13 @@
     <header class="bg-[#2a3630] text-white pt-8 pb-10 px-5 relative overflow-hidden">
         <div class="max-w-md mx-auto text-center relative z-10">
             <span class="inline-block px-3 py-1 bg-emerald-900/60 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold tracking-wider uppercase rounded-full mb-2">
-                Tea Journey Map Archive
+                Tea Journey Detailed Map
             </span>
             <h1 class="serif text-2xl font-bold mb-1 tracking-tight leading-tight">
-                홍콩 일차별 여정 지도
+                홍콩 공항·숙소·찻집 상세 동선
             </h1>
             <p class="serif text-xs text-emerald-200/90 font-light mb-4">
-                - 스팟 연결선 &amp; 이동 동선 가이드 -
+                - 3박 4일 일자별 완벽 가이드 -
             </p>
             <a href="./index.html" class="inline-block text-xs bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2 rounded-xl transition border border-white/20">
                 ← 여행일지 메인으로 돌아가기
@@ -81,20 +81,23 @@
         <!-- 지도 카드 -->
         <section class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm p-4 space-y-3">
             <div class="flex items-center justify-between">
-                <h2 class="serif font-bold text-stone-900 text-sm">📍 일차별 스팟 &amp; 동선 그림 지도</h2>
-                <span class="text-[11px] text-stone-500">핀 터치시 상세 정보</span>
+                <h2 class="serif font-bold text-stone-900 text-sm">📍 전체 이동 동선 &amp; 찻집 지도</h2>
+                <span class="text-[11px] text-stone-500">핀 터치시 장소 확인</span>
             </div>
 
-            <!-- 일차별 범례 탭 -->
-            <div class="flex items-center justify-around bg-stone-100 p-2 rounded-xl text-xs font-semibold">
+            <!-- 범례 탭 -->
+            <div class="grid grid-cols-2 gap-2 bg-stone-100 p-2.5 rounded-xl text-[11px] font-semibold">
+                <div class="flex items-center gap-1.5 text-stone-600">
+                    <span class="w-3 h-3 rounded-full bg-stone-500 inline-block"></span> 공항 / 숙소 (Base)
+                </div>
                 <div class="flex items-center gap-1.5 text-red-600">
-                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> 1일차 (8/16)
+                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> 1일차 (센트럴/침사추이)
                 </div>
                 <div class="flex items-center gap-1.5 text-blue-600">
-                    <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> 2일차 (8/17)
+                    <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> 2일차 (청차우섬/몽콕)
                 </div>
                 <div class="flex items-center gap-1.5 text-emerald-600">
-                    <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> 3일차 (8/18)
+                    <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> 3일차 (공방/삼수이포)
                 </div>
             </div>
 
@@ -104,44 +107,55 @@
             </div>
 
             <p class="text-[11px] text-stone-500 text-center leading-relaxed">
-                각 날짜별로 방문했던 스팟들이 **선과 화살표**로 순서대로 연결되어 있습니다. 지도를 지느러미 드래그나 두 손가락으로 확대/축소해 보세요!
+                공항 도착부터 숙소 체크인, 일자별 탐방 경로가 색상별 선으로 세밀하게 연결되어 있습니다.
             </p>
         </section>
 
-        <!-- 일차별 동선 요약 리스트 -->
+        <!-- 상세 일차별 경로 아카이브 -->
         <section class="space-y-3">
-            <h3 class="serif font-bold text-stone-900 text-base">🗓️ 일차별 방문 경로</h3>
+            <h3 class="serif font-bold text-stone-900 text-base">🗓️ 타임라인별 상세 동선</h3>
             
-            <!-- 1일차 -->
-            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-2">
+            <!-- Base (공항/숙소) -->
+            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-1.5">
                 <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
-                    <h4 class="font-bold text-stone-900 text-xs">1일차 (8/16 토): 센트럴 &amp; 침사추이 찻집</h4>
+                    <span class="w-2.5 h-2.5 rounded-full bg-stone-500"></span>
+                    <h4 class="font-bold text-stone-900 text-xs">입출국 및 베이스캠프</h4>
                 </div>
                 <p class="text-[11px] text-stone-600 leading-relaxed pl-4">
-                    센트럴 ➔ 顏奇香茶莊 ➔ 祥興茶行 ➔ 다구문물관 ➔ 빅토리아 피크 ➔ 852Teahouse (침사추이)
+                    ✈️ 홍콩 국제공항 (HKG) ➔ 🏨 Kung-Fu Hostel (숙소)
+                </p>
+            </div>
+
+            <!-- 1일차 -->
+            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-1.5">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                    <h4 class="font-bold text-stone-900 text-xs">1일차 (8/16 토): 센트럴 노포 및 침사추이</h4>
+                </div>
+                <p class="text-[11px] text-stone-600 leading-relaxed pl-4">
+                    숙소 ➔ 센트럴 ➔ 顏奇香茶莊 ➔ 祥興茶行 ➔ 다구문물관 ➔ 빅토리아 피크 ➔ 中樂號茶莊(852Teahouse) ➔ 침사추이 야경 ➔ 숙소
                 </p>
             </div>
 
             <!-- 2일차 -->
-            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-2">
+            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-1.5">
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                    <h4 class="font-bold text-stone-900 text-xs">2일차 (8/17 일): 청차우 섬 &amp; 몽콕 쇼핑</h4>
+                    <h4 class="font-bold text-stone-900 text-xs">2일차 (8/17 일): 청차우 섬 &amp; 몽콕 주방거리</h4>
                 </div>
                 <p class="text-[11px] text-stone-600 leading-relaxed pl-4">
-                    센트럴 페리 선착장 ➔ 청차우 섬 (자전거) ➔ 몽콕 주방용품 거리 ➔ 852Teahouse 재방문
+                    숙소 ➔ 센트럴 페리 선착장 ➔ ⛴️ 청차우 섬 (자전거 라이딩) ➔ 센트럴 복귀 ➔ 몽콕 주방용품 거리 ➔ 中樂號茶莊 재방문 ➔ 숙소
                 </p>
             </div>
 
             <!-- 3일차 -->
-            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-2">
+            <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-1.5">
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                    <h4 class="font-bold text-stone-900 text-xs">3일차 (8/18 월): 공방 &amp; 삼수이포 찻집</h4>
+                    <h4 class="font-bold text-stone-900 text-xs">3일차 (8/18 월): 도자기 공방 &amp; 삼수이포</h4>
                 </div>
                 <p class="text-[11px] text-stone-600 leading-relaxed pl-4">
-                    월동자창 (도자기 공방) ➔ 몽콕 거리 ➔ SUM FONG TEA HOUSE (삼수이포) ➔ 귀국
+                    숙소 ➔ 월동자창 (구룡베이 공방) ➔ 몽콕 번화가 ➔ SUM FONG TEA HOUSE (삼수이포 찻집) ➔ ✈️ 홍콩 국제공항 출국
                 </p>
             </div>
         </section>
@@ -156,47 +170,65 @@
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            // 홍콩 중앙 좌표 설정
+            // 홍콩 중심 좌표 설정 (공항부터 구룡반도/홍콩섬이 모두 보이도록 줌 조절)
             const map = L.map('map', {
                 zoomControl: false
-            }).setView([22.3100, 114.1650], 12);
+            }).setView([22.3150, 114.1300], 11);
 
-            // 타일 레이어 추가 (OpenStreetMap)
+            // OpenStreetMap 레이어 추가
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 attribution: '© OpenStreetMap'
             }).addTo(map);
 
-            // 1일차 스팟 데이터 (빨간색)
+            // 공항 및 숙소 (Base)
+            const baseSpots = [
+                { name: "✈️ 홍콩 국제공항 (HKG)", lat: 22.3080, lng: 113.9185 },
+                { name: "🏨 Kung-Fu Hostel (숙소)", lat: 22.2980, lng: 114.1720 }
+            ];
+
+            // 1일차 스팟 (빨간색)
             const day1Spots = [
-                { name: "1. 센트럴 거리", lat: 22.2819, lng: 114.1581 },
-                { name: "2. 顏奇香茶莊 (Ngan Ki Heung)", lat: 22.2835, lng: 114.1528 },
-                { name: "3. 祥興茶行 (Cheung Hing)", lat: 22.2865, lng: 114.1485 },
-                { name: "4. 다구문물관 (Museum of Tea Ware)", lat: 22.2778, lng: 114.1618 },
-                { name: "5. 빅토리아 피크", lat: 22.2711, lng: 114.1498 },
-                { name: "6. 852Teahouse (침사추이)", lat: 22.2988, lng: 114.1722 }
+                { name: "1일차 ① 센트럴 거리 / 트램", lat: 22.2819, lng: 114.1581 },
+                { name: "1일차 ② 顏奇香茶莊 (Ngan Ki Heung)", lat: 22.2835, lng: 114.1528 },
+                { name: "1일차 ③ 祥興茶行 (Cheung Hing)", lat: 22.2865, lng: 114.1485 },
+                { name: "1일차 ④ 다구문물관 (Museum of Tea Ware)", lat: 22.2778, lng: 114.1618 },
+                { name: "1일차 ⑤ 빅토리아 피크", lat: 22.2711, lng: 114.1498 },
+                { name: "1일차 ⑥ 中樂號茶莊 (852Teahouse)", lat: 22.2988, lng: 114.1722 }
             ];
 
-            // 2일차 스팟 데이터 (파란색)
+            // 2일차 스팟 (파란색)
             const day2Spots = [
-                { name: "1. 센트럴 페리 선착장", lat: 22.2871, lng: 114.1602 },
-                { name: "2. 청차우 섬", lat: 22.2070, lng: 114.0292 },
-                { name: "3. 몽콕 주방용품 거리", lat: 22.3193, lng: 114.1694 },
-                { name: "4. 852Teahouse", lat: 22.2988, lng: 114.1722 }
+                { name: "2일차 ① 센트럴 페리 선착장", lat: 22.2871, lng: 114.1602 },
+                { name: "2일차 ② 청차우 섬 (자전거 투어)", lat: 22.2070, lng: 114.0292 },
+                { name: "2일차 ③ 몽콕 주방용품 거리", lat: 22.3193, lng: 114.1694 },
+                { name: "2일차 ④ 中樂號茶莊 (재방문)", lat: 22.2988, lng: 114.1722 }
             ];
 
-            // 3일차 스팟 데이터 (초록색)
+            // 3일차 스팟 (초록색)
             const day3Spots = [
-                { name: "1. 월동자창 (구룡베이)", lat: 22.3235, lng: 114.2135 },
-                { name: "2. 몽콕 번화가", lat: 22.3193, lng: 114.1694 },
-                { name: "3. SUM FONG TEA HOUSE (삼수이포)", lat: 22.3308, lng: 114.1622 }
+                { name: "3일차 ① 월동자창 (구룡베이 도자기 공방)", lat: 22.3235, lng: 114.2135 },
+                { name: "3일차 ② 몽콕 번화가", lat: 22.3193, lng: 114.1694 },
+                { name: "3일차 ③ SUM FONG TEA HOUSE (삼수이포)", lat: 22.3308, lng: 114.1622 }
             ];
 
-            // 스팟 마커 및 선 그리기 함수
-            function drawDayPath(spots, colorClass, strokeColor) {
+            // 베이스 (공항 ➔ 숙소) 표시
+            baseSpots.forEach(s => {
+                const icon = L.divIcon({
+                    className: 'custom-div-icon',
+                    html: `<div class="custom-marker hub-marker w-6 h-6">🏠</div>`,
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12]
+                });
+                L.marker([s.lat, s.lng], { icon: icon }).bindPopup(`<b>${s.name}</b>`).addTo(map);
+            });
+            // 공항과 숙소 연결선
+            L.polyline([[22.3080, 113.9185], [22.2980, 114.1720]], { color: '#4b5563', weight: 3, opacity: 0.7, dashArray: '4, 4' }).addTo(map);
+
+            // 일자별 경로 그리기 함수
+            function drawPath(spots, colorClass, strokeColor) {
                 const latLngs = spots.map(s => [s.lat, s.lng]);
 
-                // 스팟 마커 생성
                 spots.forEach((s, idx) => {
                     const customIcon = L.divIcon({
                         className: 'custom-div-icon',
@@ -210,19 +242,18 @@
                         .addTo(map);
                 });
 
-                // 경로 연결선 그리기 (굵은 손그림 느낌 선)
                 L.polyline(latLngs, {
                     color: strokeColor,
                     weight: 4,
-                    opacity: 0.8,
-                    dashArray: '6, 6'
+                    opacity: 0.85,
+                    dashArray: '5, 5'
                 }).addTo(map);
             }
 
-            // 1일차, 2일차, 3일차 연결선 및 마커 그리기
-            drawDayPath(day1Spots, 'day1-marker', '#ef4444');
-            drawDayPath(day2Spots, 'day2-marker', '#3b82f6');
-            drawDayPath(day3Spots, 'day3-marker', '#10b981');
+            // 각 일차별 함수 실행
+            drawPath(day1Spots, 'day1-marker', '#ef4444');
+            drawPath(day2Spots, 'day2-marker', '#3b82f6');
+            drawPath(day3Spots, 'day3-marker', '#10b981');
         });
     </script>
 </body>
