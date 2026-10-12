@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>아차茶! 홍콩 여행 전체 지도 - 아카이브</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #f7f6f2;
+            color: #2c2c2c;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .serif {
+            font-family: 'Noto Serif KR', serif;
+        }
+        .touch-btn {
+            min-height: 44px;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen pb-20">
+
+    <!-- Header Section -->
+    <header class="bg-[#2a3630] text-white pt-8 pb-10 px-5 relative overflow-hidden">
+        <div class="max-w-md mx-auto text-center relative z-10">
+            <span class="inline-block px-3 py-1 bg-emerald-900/60 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold tracking-wider uppercase rounded-full mb-2">
+                Tea Journey Map Archive
+            </span>
+            <h1 class="serif text-2xl font-bold mb-1 tracking-tight leading-tight">
+                홍콩 찻집 &amp; 스팟 전체 지도
+            </h1>
+            <p class="serif text-sm text-emerald-200/90 font-light mb-4">
+                - 아차茶! 정기다회 특별 지도 -
+            </p>
+            <a href="./index.html" class="inline-block text-xs bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2 rounded-xl transition border border-white/20">
+                ← 여행일지 및 메인으로 돌아가기
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-md mx-auto px-4 -mt-4 relative z-20 space-y-6">
+
+        <!-- Google Maps Embed Container (홍콩 중심 전체 지도) -->
+        <section class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm p-4 space-y-3">
+            <div class="flex items-center justify-between">
+                <h2 class="serif font-bold text-stone-900 text-sm">📍 홍콩 인터랙티브 전체 지도</h2>
+                <span class="text-[11px] text-emerald-800 font-medium">핀을 클릭해 확인하세요</span>
+            </div>
+            
+            <div class="w-full h-80 bg-stone-100 rounded-xl overflow-hidden relative border border-stone-200">
+                <!-- Google Maps Embed (홍콩 침사추이/센트럴 중심) -->
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59158.46083550882!2d114.13328578601683!3d22.302711000000015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x340400c423f79027%3A0x2424888be62d6455!2zFRy11g5cTrw!5e0!3m2!1sko!2skr!4v1710000000000!5m2!1sko!2skr">
+                </iframe>
+            </div>
+            <p class="text-[11px] text-stone-500 text-center leading-tight">
+                지도를 손가락으로 확대/축소하여 홍콩 전역의 찻집 위치를 탐색하실 수 있습니다.
+            </p>
+        </section>
+
+        <!-- 방문 스팟 리스트 (바로가기 링크 포함) -->
+        <section class="space-y-3">
+            <h3 class="serif font-bold text-stone-900 text-base">🏷️ 등록된 전체 스팟 목록</h3>
+            
+            <div class="space-y-2.5">
+                <!-- Spot 1 -->
+                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
+                    <div>
+                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">침사추이</span>
+                        <h4 class="font-bold text-stone-900 text-xs mt-1">中樂號茶莊 852Teahouse</h4>
+                    </div>
+                    <a href="https://maps.google.com/?cid=10734288072389957925" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
+                        지도보기
+                    </a>
+                </div>
+
+                <!-- Spot 2 -->
+                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
+                    <div>
+                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">삼수이포</span>
+                        <h4 class="font-bold text-stone-900 text-xs mt-1">SUM FONG TEA HOUSE 沁芳茶房</h4>
+                    </div>
+                    <a href="https://maps.google.com/?cid=11708138488825501377" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
+                        지도보기
+                    </a>
+                </div>
+
+                <!-- Spot 3 -->
+                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
+                    <div>
+                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">센트럴</span>
+                        <h4 class="font-bold text-stone-900 text-xs mt-1">Ngan Ki Heung Tea Co. (顏奇香茶莊)</h4>
+                    </div>
+                    <a href="https://maps.google.com/?cid=12140417933934390036" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
+                        지도보기
+                    </a>
+                </div>
+
+                <!-- Spot 4 -->
+                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
+                    <div>
+                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">상완</span>
+                        <h4 class="font-bold text-stone-900 text-xs mt-1">Cheung Hing Tea Hong (祥興茶行)</h4>
+                    </div>
+                    <a href="https://maps.google.com/?cid=13735165840656208031" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
+                        지도보기
+                    </a>
+                </div>
+
+                <!-- Spot 5 -->
+                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
+                    <div>
+                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">센트럴</span>
+                        <h4 class="font-bold text-stone-900 text-xs mt-1">Flagstaff House Museum of Tea Ware</h4>
+                    </div>
+                    <a href="https://maps.app.goo.gl/o1y51i3v2CmsdM7z8" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
+                        지도보기
+                    </a>
+                </div>
+
+                <!-- Spot 6 -->
+                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
+                    <div>
+                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">구룡베이</span>
+                        <h4 class="font-bold text-stone-900 text-xs mt-1">월동자창 (Yuet Tung China Works)</h4>
+                    </div>
+                    <a href="https://maps.app.goo.gl/bM5X7e1eBf9K8P5k6" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
+                        지도보기
+                    </a>
+                </div>
+
+                <!-- Spot 7 -->
+                <div class="bg-white p-3.5 rounded-xl border border-stone-200 flex items-center justify-between gap-3 shadow-sm">
+                    <div>
+                        <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded">외곽 섬</span>
+                        <h4 class="font-bold text-stone-900 text-xs mt-1">청차우 섬 (Cheung Chau Island)</h4>
+                    </div>
+                    <a href="https://maps.app.goo.gl/a7A8M9v5bK3Z1P7S6" target="_blank" class="text-xs bg-[#2a3630] text-white px-3 py-2 rounded-lg font-medium shrink-0 touch-btn flex items-center">
+                        지도보기
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-8 border-t border-stone-300 pt-6 text-center text-xs text-stone-500 max-w-md mx-auto px-4 pb-10">
+        <p class="serif font-semibold text-stone-700 mb-1">정기다회 - 즉흥 홍콩 여행 편</p>
+        <p>© 2026 SOLTEA_TIME. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
