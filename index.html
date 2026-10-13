@@ -148,14 +148,14 @@
             return 'images/' + path;
         }
 
-        // 1. 스팟 데이터 (구글 지도 단독 장소 페이지 링크 적용)
+        // 1. 스팟 데이터 (가장 확실하게 작동하는 구글 지도 표준 다이렉트 링크 적용)
         const spotsData = [
             {
                 id: "spot-1",
                 name: "中樂號茶莊 852Teahouse",
                 tag: "침사추이 / 보이차 & 육보차",
                 desc: "홍콩에서 차를 구매하고 싶다면 꼭 방문해야 할 곳. 사고 싶은 차를 마셔보고 결정할 수 있으며 직원분들의 친절한 설명이 인상적인 곳입니다.",
-                map: "https://www.google.com/maps/place/%E4%B8%AD%E6%A8%82%E8%99%9F%E8%8C%B6%E8%8F%AF+852Teahouse/@22.2988185,114.1722241,17z",
+                map: "https://maps.google.com/?q=852Teahouse+Tsim+Sha+Tsui+Hong+Kong",
                 img: "37.jpg"
             },
             {
@@ -163,7 +163,7 @@
                 name: "SUM FONG TEA HOUSE 沁芳茶房",
                 tag: "삼수이포 / 차도구 & 빈티지 차",
                 desc: "차를 좋아하는 사람이라면 강력 추천하는 공간. 다양한 차와 오래된 골동다기부터 사용하기 좋은 신품 다기들을 모두 만날 수 있습니다.",
-                map: "https://www.google.com/maps/place/SUM+FONG+TEA+HOUSE+%E6%B2%81%E8%8A%B3%E8%8C%B6%E6%8F%BF/@22.3315053,114.1610123,17z",
+                map: "https://maps.google.com/?q=SUM+FONG+TEA+HOUSE+Sham+Shui+Po+Hong+Kong",
                 img: "17.jpg"
             },
             {
@@ -171,7 +171,7 @@
                 name: "Ngan Ki Heung Tea Co. (顏奇香茶莊)",
                 tag: "센트럴 / 노포 차장",
                 desc: "오랜 역사와 전통을 자랑하는 홍콩 센트럴의 대표 노포 차장. 고풍스러운 차통과 전통 차 문화를 느낄 수 있는 곳입니다.",
-                map: "https://www.google.com/maps/place/Ngan+Ki+Heung+Tea+Company+Limited/@22.2845604,114.1156875,15.33z",
+                map: "https://maps.google.com/?q=Ngan+Ki+Heung+Tea+Co+Central+Hong+Kong",
                 img: "44.jpg"
             },
             {
@@ -179,7 +179,7 @@
                 name: "Cheung Hing Tea Hong (祥興茶行)",
                 tag: "상완 / 노포 차장",
                 desc: "홍콩 현지 다방 및 찻집에 차를 공급해온 유서 깊은 차장. 전통 차 포장과 깊은 차 향을 체험할 수 있습니다.",
-                map: "https://www.google.com/maps/place/%E7%A5%A5%E8%88%88%E8%8C%B6%E8%A1%8C+Cheung+Hing+Tea+Hong/@22.2858123,114.1512345,17z",
+                map: "https://maps.google.com/?q=Cheung+Hing+Tea+Hong+Sheung+Wan+Hong+Kong",
                 img: "28.jpg"
             },
             {
@@ -187,7 +187,7 @@
                 name: "Flagstaff House Museum of Tea Ware",
                 tag: "센트럴 / 차도구 박물관",
                 desc: "홍콩 공원 내에 위치한 차도구 박물관 (다구문물관). 역사 깊은 자사호와 중국 전통 차도구 컬렉션이 전시되어 있습니다.",
-                map: "https://www.google.com/maps/place/Flagstaff+House+Museum+of+Tea+Ware/@22.2789123,114.1624345,17z",
+                map: "https://maps.google.com/?q=Flagstaff+House+Museum+of+Tea+Ware+Hong+Kong",
                 img: "45.jpg"
             },
             {
@@ -195,7 +195,7 @@
                 name: "월동자창 (Yuet Tung China Works)",
                 tag: "구룡베이 / 수공예 도자기 공방",
                 desc: "1928년에 설립된 홍콩 최초의 핸드페인트 도자기 공방. 정교한 도자기 차구와 화려한 홍콩 전통 문양 차기를 만날 수 있는 곳입니다.",
-                map: "https://www.google.com/maps/place/Yuet+Tung+China+Works/@22.3225123,114.2120345,17z",
+                map: "https://maps.google.com/?q=Yuet+Tung+China+Works+Kowloon+Bay",
                 img: "14.jpg"
             },
             {
@@ -203,7 +203,7 @@
                 name: "센트럴 (Central)",
                 tag: "홍콩 섬 / 로컬 문화 & 트램",
                 desc: "역사적인 노포 차장들과 트램, 센트럴 헐리우드 로드의 차도구 샵들이 밀집된 홍콩 차 문화의 핵심 구역입니다.",
-                map: "https://www.google.com/maps/place/Central,+Hong+Kong/@22.2819123,114.1581345,15z",
+                map: "https://maps.google.com/?q=Central+Hong+Kong",
                 img: "46.jpg"
             },
             {
@@ -211,7 +211,7 @@
                 name: "침사추이 (Tsim Sha Tsui)",
                 tag: "구룡반도 / 야경 & 차 매장",
                 desc: "아름다운 빅토리아 하버 야경과 함께 다양한 차 전문점, 찻집들이 정겨운 홍콩의 대표적인 번화가입니다.",
-                map: "https://www.google.com/maps/place/Tsim+Sha+Tsui/@22.2952123,114.1717345,15z",
+                map: "https://maps.google.com/?q=Tsim+Sha+Tsui+Hong+Kong",
                 img: "32.jpg"
             },
             {
@@ -219,7 +219,7 @@
                 name: "몽콕 (Mong Kok)",
                 tag: "구룡반도 / 로컬 스트리트 & 시장",
                 desc: "홍콩의 열기 넘치는 로컬 거리와 주방용품 거리, 차도구 및 전통 생활용품 시장을 둘러보기 좋은 지역입니다.",
-                map: "https://www.google.com/maps/place/Mong+Kok/@22.3193123,114.1694345,15z",
+                map: "https://maps.google.com/?q=Mong+Kok+Hong+Kong",
                 img: "1.jpg"
             },
             {
@@ -227,7 +227,7 @@
                 name: "청차우 섬 (Cheung Chau Island)",
                 tag: "외곽 섬 / 자전거 휴식 & 해산물",
                 desc: "페리를 타고 다녀온 정겨운 외곽 섬. 자전거를 타고 섬을 둘러보며 휴식을 취하고 맛있는 새우 완탕면을 맛본 곳입니다.",
-                map: "https://www.google.com/maps/place/Cheung+Chau/@22.2078123,114.0279345,14z",
+                map: "https://maps.google.com/?q=Cheung+Chau+Island+Hong+Kong",
                 img: "4.jpg"
             }
         ];
