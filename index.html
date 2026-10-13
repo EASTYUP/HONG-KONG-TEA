@@ -139,8 +139,11 @@
         <p>© 2026 SOLTEA_TIME. All rights reserved.</p>
     </footer>
 
+    <!-- Hidden File Input for Timeline Media -->
+    <input type="file" id="global-timeline-media-input" accept="image/*,video/*" multiple class="hidden" onchange="handleTimelineMediaUpload(event)">
+
     <script>
-        // 파일 경로 직접 참조 방식 (images/ 폴더 안에 사진을 넣고 경로를 지정합니다)
+        // 1. 스팟 데이터 (이미지 파일 경로 방식)
         const spotsData = [
             {
                 id: "spot-1",
@@ -148,7 +151,7 @@
                 tag: "침사추이 / 보이차 & 고산차",
                 desc: "홍콩에서 차를 구매하고 싶다면 꼭 방문해야 할 곳. 사고 싶은 차를 마셔보고 결정할 수 있으며 직원분들의 친절한 설명이 인상적인 곳입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E6%A8%82%E8%99%9F%E8%8C%B6%E8%8F%AF+852Teahouse+Tsim+Sha+Tsui",
-                img: "37.jpg"
+                img: "images/h1.jpg"
             },
             {
                 id: "spot-2",
@@ -156,7 +159,7 @@
                 tag: "삼수이포 / 차도구 & 빈티지 차",
                 desc: "차를 좋아하는 사람이라면 강력 추천하는 공간. 수많은 종류의 차와 오래된 차도구 컬렉션을 만날 수 있습니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=SUM+FONG+TEA+HOUSE+%E6%B2%81%E8%8A%B3%E8%8C%B6%E6%8F%BF+Sham+Shui+Po",
-                img: "17.jpg"
+                img: "images/h2.jpg"
             },
             {
                 id: "spot-3",
@@ -164,7 +167,7 @@
                 tag: "센트럴 / 노포 차장",
                 desc: "오랜 역사와 전통을 자랑하는 홍콩 센트럴의 대표 노포 차장. 고풍스러운 차통과 전통 차 문화를 느낄 수 있는 곳입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Ngan+Ki+Heung+Tea+Co+%E9%A1%8F%E5%A5%87%E9%A6%99%E8%8C%B6%E8%8A%8A+Central+Hong+Kong",
-                img: "44.jpg"
+                img: "images/h3.jpg"
             },
             {
                 id: "spot-4",
@@ -172,7 +175,7 @@
                 tag: "상완 / 노포 차장",
                 desc: "홍콩 현지 다방 및 찻집에 차를 공급해온 유서 깊은 차장. 전통 차 포장과 깊은 차 향을 체험할 수 있습니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Cheung+Hing+Tea+Hong+%E7%A5%A5%E8%88%88%E8%8C%B6%E8%A1%8C+Sheung+Wan",
-                img: "28.jpg"
+                img: "images/h4.jpg"
             },
             {
                 id: "spot-5",
@@ -180,7 +183,7 @@
                 tag: "센트럴 / 차도구 박물관",
                 desc: "홍콩 공원 내에 위치한 차도구 박물관 (다구문물관). 역사 깊은 자사호와 중국 전통 차도구 컬렉션이 전시되어 있습니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Flagstaff+House+Museum+of+Tea+Ware+Central+Hong+Kong",
-                img: "45.jpg"
+                img: "images/h5.jpg"
             },
             {
                 id: "spot-6",
@@ -188,7 +191,7 @@
                 tag: "구룡베이 / 수공예 도자기 공방",
                 desc: "1928년에 설립된 홍콩 최초의 핸드페인트 도자기 공방. 정교한 도자기 차구와 화려한 홍콩 전통 문양 차기를 만날 수 있는 곳입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Yuet+Tung+China+Works+Kowloon+Bay",
-                img: "14.jpg"
+                img: "images/h6.jpg"
             },
             {
                 id: "spot-7",
@@ -196,7 +199,7 @@
                 tag: "홍콩 섬 / 로컬 문화 & 트램",
                 desc: "역사적인 노포 차장들과 트램, 센트럴 헐리우드 로드의 차도구 샵들이 밀집된 홍콩 차 문화의 핵심 구역입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Central+Hong+Kong",
-                img: "32.jpg"
+                img: "images/h7.jpg"
             },
             {
                 id: "spot-8",
@@ -204,7 +207,7 @@
                 tag: "구룡반도 / 야경 & 차 매장",
                 desc: "아름다운 빅토리아 하버 야경과 함께 다양한 차 전문점, 찻집들이 정겨운 홍콩의 대표적인 번화가입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Tsim+Sha+Tsui+Hong+Kong",
-                img: "images/spot8.jpg"
+                img: "images/h8.jpg"
             },
             {
                 id: "spot-9",
@@ -212,7 +215,7 @@
                 tag: "구룡반도 / 로컬 스트리트 & 시장",
                 desc: "홍콩의 열기 넘치는 로컬 거리와 주방용품 거리, 차도구 및 전통 생활용품 시장을 둘러보기 좋은 지역입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Mong+Kok+Hong+Kong",
-                img: "1.jpg"
+                img: "images/h9.jpg"
             },
             {
                 id: "spot-10",
@@ -220,11 +223,12 @@
                 tag: "외곽 섬 / 자전거 휴식 & 해산물",
                 desc: "페리를 타고 다녀온 정겨운 외곽 섬. 자전거를 타고 섬을 둘러보며 휴식을 취하고 맛있는 새우 완탕면을 맛본 곳입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Cheung+Chau+Island+Hong+Kong",
-                img: "4.jpg"
+                img: "images/h10.jpg"
             }
         ];
 
-        const timelineData = [
+        // 2. 타임라인 데이터 (사진/동영상 미디어 추가 기능 복원)
+        let timelineData = [
             { id: "t-1", day: "8/15", time: "PM 05:20", title: "공항 도착", desc: "인천국제공항 도착 및 탑승 수속", icon: "✈️", bg: "bg-blue-50 text-blue-700", media: [] },
             { id: "t-2", day: "8/15", time: "PM 08:05", title: "티웨이 항공 출국", desc: "인천(ICN) ➔ 홍콩(HKG) 출발", icon: "🛫", bg: "bg-blue-50 text-blue-700", media: [] },
             { id: "t-3", day: "8/15", time: "PM 11:30", title: "홍콩 국제공항 도착", desc: "홍콩 도착 후 숙소 이동 준비", icon: "🛬", bg: "bg-blue-50 text-blue-700", media: [] },
@@ -264,10 +268,38 @@
             { id: "t-37", day: "8/19", time: "AM 06:30", title: "출근!", desc: "일상으로 복귀 및 직장 출근", icon: "💼", bg: "bg-rose-50 text-rose-800", media: [] }
         ];
 
+        let selectedTimelineIdForMedia = null;
+
         window.addEventListener('DOMContentLoaded', () => {
+            loadTimelineMedia();
             renderSpots();
             renderTimeline('all');
         });
+
+        // 타임라인 미디어는 브라우저 localStorage에 안전하게 유지
+        function loadTimelineMedia() {
+            const saved = localStorage.getItem('hk_tea_timeline_media');
+            if (saved) {
+                try {
+                    const mediaMap = JSON.parse(saved);
+                    timelineData.forEach(item => {
+                        if (mediaMap[item.id]) {
+                            item.media = mediaMap[item.id];
+                        }
+                    });
+                } catch(e) {}
+            }
+        }
+
+        function saveTimelineMedia() {
+            const mediaMap = {};
+            timelineData.forEach(item => {
+                if (item.media && item.media.length > 0) {
+                    mediaMap[item.id] = item.media;
+                }
+            });
+            localStorage.setItem('hk_tea_timeline_media', JSON.stringify(mediaMap));
+        }
 
         function renderSpots() {
             const container = document.getElementById('spots-grid');
@@ -330,6 +362,33 @@
                 const card = document.createElement('div');
                 card.className = "relative pl-8 group";
 
+                let mediaHtml = '';
+                if (item.media && item.media.length > 0) {
+                    mediaHtml = `
+                        <div class="relative w-full aspect-[3/4] bg-stone-900 rounded-xl overflow-hidden mt-3" id="slider-${item.id}">
+                            <div class="absolute inset-0 flex items-center transition-transform duration-300 ease-out slider-track-${item.id}" style="display: flex;">
+                                ${item.media.map((m, idx) => `
+                                    <div class="w-full h-full shrink-0 relative flex items-center justify-center bg-black">
+                                        ${m.type === 'video' ? `
+                                            <video src="${m.url}" controls class="w-full h-full object-contain"></video>
+                                        ` : `
+                                            <img src="${m.url}" alt="media" class="w-full h-full object-cover">
+                                        `}
+                                        <button onclick="deleteTimelineMedia('${item.id}',${idx})" class="absolute top-2 right-2 bg-black/70 text-white text-[10px] px-2 py-1 rounded-md">삭제</button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${item.media.length > 1 ? `
+                                <button onclick="slideMedia('${item.id}', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs">◀</button>
+                                <button onclick="slideMedia('${item.id}', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs">▶</button>
+                                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full" id="indicator-${item.id}">
+                                    1 / ${item.media.length}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+
                 card.innerHTML = `
                     <div class="absolute left-1.5 top-0 w-6 h-6 rounded-full bg-[#2a3630] border-2 border-white text-white text-[10px] flex items-center justify-center shadow z-10">
                         ${item.icon}
@@ -339,15 +398,85 @@
                             <span class="text-xs font-bold px-2.5 py-1.5 rounded-lg ${item.bg} tracking-tight whitespace-nowrap">
                                 📅 ${item.day} &nbsp;|&nbsp; ⏰ ${item.time}
                             </span>
+                            <button onclick="triggerTimelineMediaUpload('${item.id}')" title="사진/동영상 추가" class="w-10 h-10 bg-emerald-50 text-emerald-800 font-medium rounded-xl border border-emerald-200 active:bg-emerald-100 transition flex items-center justify-center text-base shrink-0 touch-btn">
+                                📷
+                            </button>
                         </div>
                         <div>
                             <h4 class="font-bold text-stone-900 text-sm mb-1">${item.title}</h4>
                             <p class="text-xs text-stone-600 leading-relaxed">${item.desc}</p>
                         </div>
+                        ${mediaHtml}
                     </div>
                 `;
                 container.appendChild(card);
             });
+        }
+
+        window.slideStates = {};
+        function slideMedia(itemId, direction) {
+            const item = timelineData.find(t => t.id === itemId);
+            if (!item || !item.media) return;
+            
+            if (!window.slideStates[itemId]) window.slideStates[itemId] = 0;
+            const maxIdx = item.media.length - 1;
+            
+            window.slideStates[itemId] += direction;
+            if (window.slideStates[itemId] < 0) window.slideStates[itemId] = 0;
+            if (window.slideStates[itemId] > maxIdx) window.slideStates[itemId] = maxIdx;
+
+            const idx = window.slideStates[itemId];
+            const track = document.querySelector(`.slider-track-${itemId}`);
+            if (track) {
+                track.style.transform = `translateX(-${idx * 100}%)`;
+            }
+            const indicator = document.getElementById(`indicator-${itemId}`);
+            if (indicator) {
+                indicator.innerText = `${idx + 1} / ${item.media.length}`;
+            }
+        }
+
+        function triggerTimelineMediaUpload(id) {
+            selectedTimelineIdForMedia = id;
+            document.getElementById('global-timeline-media-input').click();
+        }
+
+        function handleTimelineMediaUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0 || !selectedTimelineIdForMedia) return;
+
+            const targetItem = timelineData.find(t => t.id === selectedTimelineIdForMedia);
+            if (!targetItem) return;
+
+            if (!targetItem.media) targetItem.media = [];
+
+            let processedCount = 0;
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const isVideo = file.type.startsWith('video');
+                    targetItem.media.push({
+                        type: isVideo ? 'video' : 'image',
+                        url: e.target.result
+                    });
+                    processedCount++;
+                    if (processedCount === files.length) {
+                        saveTimelineMedia();
+                        renderTimeline(document.querySelector('.day-btn.bg-\\[\\#2a3630\\]')?.getAttribute('data-day') || 'all');
+                        event.target.value = '';
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function deleteTimelineMedia(itemId, mediaIdx) {
+            const item = timelineData.find(t => t.id === itemId);
+            if (item && item.media) {
+                item.media.splice(mediaIdx, 1);
+                saveTimelineMedia();
+                renderTimeline(document.querySelector('.day-btn.bg-\\[\\#2a3630\\]')?.getAttribute('data-day') || 'all');
+            }
         }
 
         function filterDay(day) {
