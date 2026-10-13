@@ -139,8 +139,11 @@
         <p>© 2026 SOLTEA_TIME. All rights reserved.</p>
     </footer>
 
+    <!-- Hidden File Input for Timeline Media -->
+    <input type="file" id="global-timeline-media-input" accept="image/*,video/*" multiple class="hidden" onchange="handleTimelineMediaUpload(event)">
+
     <script>
-        // 이미지 경로 정제 함수
+        // 이미지 경로 정제 함수 (폴더 경로 보장)
         function formatImgPath(path) {
             if (!path) return 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80';
             if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) return path;
@@ -232,8 +235,8 @@
             }
         ];
 
-        // 2. 타임라인 데이터 (코드에 작성된 이미지 경로가 슬라이드로 자동 반영됨)
-        const timelineData = [
+        // 2. 타임라인 데이터
+        let timelineData = [
             { id: "t-1", day: "8/15", time: "PM 05:20", title: "공항 도착", desc: "인천국제공항 도착 및 탑승 수속", icon: "✈️", bg: "bg-blue-50 text-blue-700", media: [] },
             { id: "t-2", day: "8/15", time: "PM 08:05", title: "티웨이 항공 출국", desc: "인천(ICN) ➔ 홍콩(HKG) 출발", icon: "🛫", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "47.jpg" }] },
             { id: "t-3", day: "8/15", time: "PM 11:30", title: "홍콩 국제공항 도착", desc: "홍콩 도착 후 숙소 이동 준비", icon: "🛬", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "48.jpg" }] },
@@ -243,40 +246,71 @@
             { id: "t-7", day: "8/16", time: "AM 10:00", title: "Ngan Ki Heung Tea Co. 방문", desc: "顏奇香茶莊 노포 차장 탐방 및 차 구경", icon: "🍵", bg: "bg-emerald-100 text-emerald-900", media: [{ type: "image", url: "27.jpg" }] },
             { id: "t-8", day: "8/16", time: "AM 11:00", title: "Cheung Hing Tea Hong 방문", desc: "祥興茶行 노포 차장 탐방", icon: "🍵", bg: "bg-emerald-100 text-emerald-900", media: [{ type: "image", url: "30.jpg" }] },
             { id: "t-9", day: "8/16", time: "PM 12:00", title: "Flagstaff House 차도구 박물관 관람", desc: "홍콩 공원 내 다구문물관에서 자사호 및 다구 관람", icon: "🏛️", bg: "bg-purple-50 text-purple-800", media: [{ type: "image", url: "45.jpg" }] },
-            { id: "t-10", day: "8/16", time: "PM 01:00", title: "점심 식사 (딤섬)", desc: "홍콩 정통 딤섬으로 점심 식사", icon: "🥟", bg: "bg-amber-50 text-amber-800", media: [] },
-            { id: "t-11", day: "8/16", time: "PM 03:00", title: "빅토리아 피크 (Victoria Peak)", desc: "빅토리아 피크 방문하여 홍콩 전경 관람", icon: "⛰️", bg: "bg-emerald-50 text-emerald-800", media: [] },
+            { id: "t-10", day: "8/16", time: "PM 01:00", title: "점심 식사 (딤섬)", desc: "홍콩 정통 딤섬으로 점심 식사", icon: "🥟", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "29.jpg" }] },
+            { id: "t-11", day: "8/16", time: "PM 03:00", title: "빅토리아 피크 (Victoria Peak)", desc: "빅토리아 피크 방문하여 홍콩 전경 관람", icon: "⛰️", bg: "bg-emerald-50 text-emerald-800", media: [{ type: "image", url: "35.jpg" }] },
             { id: "t-12", day: "8/16", time: "PM 05:00", title: "숙소 복귀", desc: "숙소 도착 후 잠시 짐 풀기 및 휴식", icon: "🏨", bg: "bg-stone-100 text-stone-700", media: [] },
             { id: "t-13", day: "8/16", time: "PM 06:00", title: "中樂號茶莊 852Teahouse 방문", desc: "차 시음 및 유키, 신디와 인연을 맺음", icon: "🫖", bg: "bg-emerald-100 text-emerald-900", media: [] },
-            { id: "t-14", day: "8/16", time: "PM 08:30", title: "침사추이 저녁 식사", desc: "침사추이 로컬 맛집에서 저녁 식사", icon: "🍽️", bg: "bg-amber-50 text-amber-800", media: [] },
-            { id: "t-15", day: "8/16", time: "PM 09:30", title: "침사추이 야경 감상", desc: "빅토리아 하버 레이저 쇼 및 야경 구경", icon: "🌃", bg: "bg-indigo-50 text-indigo-800", media: [] },
+            { id: "t-14", day: "8/16", time: "PM 08:30", title: "침사추이 저녁 식사", desc: "침사추이 로컬 맛집에서 저녁 식사", icon: "🍽️", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "40.jpg" }] },
+            { id: "t-15", day: "8/16", time: "PM 09:30", title: "침사추이 야경 감상", desc: "빅토리아 하버 레이저 쇼 및 야경 구경", icon: "🌃", bg: "bg-indigo-50 text-indigo-800", media: [{ type: "image", url: "41.jpg" }] },
             { id: "t-16", day: "8/16", time: "PM 10:30", title: "숙소 복귀 및 휴식", desc: "하루 일정 마무리 후 휴식", icon: "🛌", bg: "bg-stone-100 text-stone-700", media: [] },
-            { id: "t-17", day: "8/17", time: "AM 07:00", title: "기상 및 하루 준비", desc: "이른 아침 기상", icon: "☀️", bg: "bg-stone-100 text-stone-700", media: [] },
-            { id: "t-18", day: "8/17", time: "AM 07:30", title: "아침 식사 (홍콩식 죽)", desc: "따뜻한 콘지(죽)로 아침 식사", icon: "🥣", bg: "bg-amber-50 text-amber-800", media: [] },
-            { id: "t-19", day: "8/17", time: "AM 09:30", title: "Cheung Chau 섬으로 출발", desc: "센트럴 페리 선착장에서 페리 탑승", icon: "⛴️", bg: "bg-blue-50 text-blue-700", media: [] },
-            { id: "t-20", day: "8/17", time: "AM 11:30", title: "청차우 섬 도착", desc: "아름다운 외곽 섬 청차우 도착", icon: "🏝️", bg: "bg-blue-50 text-blue-700", media: [] },
-            { id: "t-21", day: "8/17", time: "PM 12:00", title: "점심 식사 (새우 완탕면)", desc: "섬 로컬 맛집에서 싱싱한 새우 완탕면 식사", icon: "🍜", bg: "bg-amber-50 text-amber-800", media: [] },
-            { id: "t-22", day: "8/17", time: "PM 01:30", title: "자전거 섬 투어", desc: "자전거를 대여하여 청차우 섬 구석구석 라이딩", icon: "🚲", bg: "bg-emerald-50 text-emerald-800", media: [] },
-            { id: "t-23", day: "8/17", time: "PM 02:30", title: "침사추이로 복귀", desc: "페리를 타고 침사추이로 복귀", icon: "⛴️", bg: "bg-blue-50 text-blue-700", media: [] },
-            { id: "t-24", day: "8/17", time: "PM 03:30", title: "주방용품 거리 차도구 쇼핑", desc: "몽콕/주방용품 거리에서 찻잔 및 차도구 둘러보기", icon: "🛍️", bg: "bg-rose-50 text-rose-800", media: [] },
-            { id: "t-25", day: "8/17", time: "PM 05:00", title: "中樂號茶莊 852Teahouse 재방문", desc: "다시 방문하여 깊은 차 이야기와 시음", icon: "🫖", bg: "bg-emerald-100 text-emerald-900", media: [] },
-            { id: "t-26", day: "8/17", time: "PM 08:00", title: "저녁 식사 (한식당)", desc: "현지 한식당에서 저녁 식사", icon: "🍲", bg: "bg-amber-50 text-amber-800", media: [] },
+            { id: "t-17", day: "8/17", time: "AM 07:00", title: "기상 및 하루 준비", desc: "이른 아침 기상", icon: "☀️", bg: "bg-stone-100 text-stone-700", media: [{ type: "image", url: "42.jpg" }] },
+            { id: "t-18", day: "8/17", time: "AM 07:30", title: "아침 식사 (홍콩식 죽)", desc: "따뜻한 콘지(죽)로 아침 식사", icon: "🥣", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "43.jpg" }] },
+            { id: "t-19", day: "8/17", time: "AM 09:30", title: "Cheung Chau 섬으로 출발", desc: "센트럴 페리 선착장에서 페리 탑승", icon: "⛴️", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "2.jpg" }] },
+            { id: "t-20", day: "8/17", time: "AM 11:30", title: "청차우 섬 도착", desc: "아름다운 외곽 섬 청차우 도착", icon: "🏝️", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "5.jpg" }] },
+            { id: "t-21", day: "8/17", time: "PM 12:00", title: "점심 식사 (새우 완탕면)", desc: "섬 로컬 맛집에서 싱싱한 새우 완탕면 식사", icon: "🍜", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "6.jpg" }] },
+            { id: "t-22", day: "8/17", time: "PM 01:30", title: "자전거 섬 투어", desc: "자전거를 대여하여 청차우 섬 구석구석 라이딩", icon: "🚲", bg: "bg-emerald-50 text-emerald-800", media: [{ type: "image", url: "7.jpg" }] },
+            { id: "t-23", day: "8/17", time: "PM 02:30", title: "침사추이로 복귀", desc: "페리를 타고 침사추이로 복귀", icon: "⛴️", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "3.jpg" }] },
+            { id: "t-24", day: "8/17", time: "PM 03:30", title: "주방용품 거리 차도구 쇼핑", desc: "몽콕/주방용품 거리에서 찻잔 및 차도구 둘러보기", icon: "🛍️", bg: "bg-rose-50 text-rose-800", media: [{ type: "image", url: "8.jpg" }] },
+            { id: "t-25", day: "8/17", time: "PM 05:00", title: "中樂號茶莊 852Teahouse 재방문", desc: "다시 방문하여 깊은 차 이야기와 시음", icon: "🫖", bg: "bg-emerald-100 text-emerald-900", media: [{ type: "image", url: "9.jpg" }] },
+            { id: "t-26", day: "8/17", time: "PM 08:00", title: "저녁 식사 (한식당)", desc: "현지 한식당에서 저녁 식사", icon: "🍲", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "10.jpg" }] },
             { id: "t-27", day: "8/17", time: "PM 11:00", title: "숙소 복귀 및 휴식", desc: "하루 마무리 후 숙소 휴식", icon: "🛌", bg: "bg-stone-100 text-stone-700", media: [] },
             { id: "t-28", day: "8/18", time: "AM 07:30", title: "기상", desc: "마지막 날 기상 및 짐 정리", icon: "☀️", bg: "bg-stone-100 text-stone-700", media: [] },
-            { id: "t-29", day: "8/18", time: "AM 08:00", title: "홍콩식 아침 식사", desc: "차찬탱에서 홍콩식 차와 토스트 식사", icon: "🍞", bg: "bg-amber-50 text-amber-800", media: [] },
-            { id: "t-30", day: "8/18", time: "AM 09:00", title: "월동자창 (Yuet Tung China Works)", desc: "까우룽베이 핸드페인트 도자기 공방 방문 및 차기 쇼핑", icon: "🎨", bg: "bg-purple-50 text-purple-800", media: [] },
-            { id: "t-31", day: "8/18", time: "AM 11:00", title: "몽콕 도착 & 로컬 거리 구경", desc: "몽콕 번화가 및 거리 풍경 구경", icon: "🛍️", bg: "bg-emerald-50 text-emerald-800", media: [] },
-            { id: "t-32", day: "8/18", time: "PM 12:30", title: "점심 식사 (우육면)", desc: "우육면으로 맛있는 점심 식사", icon: "🍜", bg: "bg-amber-50 text-amber-800", media: [] },
-            { id: "t-33", day: "8/18", time: "PM 02:30", title: "SUM FONG TEA HOUSE 沁芳茶房 방문", desc: "삼수이포 찻집 탐방 및 차도구 구경", icon: "🫖", bg: "bg-emerald-100 text-emerald-900", media: [] },
-            { id: "t-34", day: "8/18", time: "PM 06:30", title: "홍콩 국제공항 도착", desc: "공항 이동 및 출국 수속", icon: "🛫", bg: "bg-blue-50 text-blue-700", media: [] },
-            { id: "t-35", day: "8/18", time: "PM 09:30", title: "홍콩익스프레스 귀국 탑승", desc: "홍콩(HKG) ➔ 인천(ICN) 출발", icon: "✈️", bg: "bg-blue-50 text-blue-700", media: [] },
-            { id: "t-36", day: "8/19", time: "AM 02:00", title: "인천국제공항 도착", desc: "인천 도착 후 공항 노숙 후 첫차 대기", icon: "🏢", bg: "bg-stone-100 text-stone-700", media: [] },
-            { id: "t-37", day: "8/19", time: "AM 06:30", title: "출근!", desc: "일상으로 복귀 및 직장 출근", icon: "💼", bg: "bg-rose-50 text-rose-800", media: [] }
+            { id: "t-29", day: "8/18", time: "AM 08:00", title: "홍콩식 아침 식사", desc: "차찬탱에서 홍콩식 차와 토스트 식사", icon: "🍞", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "12.jpg" }] },
+            { id: "t-30", day: "8/18", time: "AM 09:00", title: "월동자창 (Yuet Tung China Works)", desc: "까우룽베이 핸드페인트 도자기 공방 방문 및 차기 쇼핑", icon: "🎨", bg: "bg-purple-50 text-purple-800", media: [{ type: "image", url: "13.jpg" }] },
+            { id: "t-31", day: "8/18", time: "AM 11:00", title: "몽콕 도착 & 로컬 거리 구경", desc: "몽콕 번화가 및 거리 풍경 구경", icon: "🛍️", bg: "bg-emerald-50 text-emerald-800", media: [{ type: "image", url: "15.jpg" }] },
+            { id: "t-32", day: "8/18", time: "PM 12:30", title: "점심 식사 (우육면)", desc: "우육면으로 맛있는 점심 식사", icon: "🍜", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "16.jpg" }] },
+            { id: "t-33", day: "8/18", time: "PM 02:30", title: "SUM FONG TEA HOUSE 沁芳茶房 방문", desc: "삼수이포 찻집 탐방 및 차도구 구경", icon: "🫖", bg: "bg-emerald-100 text-emerald-900", media: [{ type: "image", url: "18.jpg" }] },
+            { id: "t-34", day: "8/18", time: "PM 06:30", title: "홍콩 국제공항 도착", desc: "공항 이동 및 출국 수속", icon: "🛫", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "20.jpg" }] },
+            { id: "t-35", day: "8/18", time: "PM 09:30", title: "홍콩익스프레스 귀국 탑승", desc: "홍콩(HKG) ➔ 인천(ICN) 출발", icon: "✈️", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "21.jpg" }] },
+            { id: "t-36", day: "8/19", time: "AM 02:00", title: "인천국제공항 도착", desc: "인천 도착 후 공항 노숙 후 첫차 대기", icon: "🏢", bg: "bg-stone-100 text-stone-700", media: [{ type: "image", url: "22.jpg" }] },
+            { id: "t-37", day: "8/19", time: "AM 06:30", title: "출근!", desc: "일상으로 복귀 및 직장 출근", icon: "💼", bg: "bg-rose-50 text-rose-800", media: [{ type: "image", url: "23.jpg" }] }
         ];
 
+        let selectedTimelineIdForMedia = null;
+
         window.addEventListener('DOMContentLoaded', () => {
+            // 오래된 데이터 초기화
+            localStorage.removeItem('hk_tea_spots_data');
+            localStorage.removeItem('hk_tea_timeline_data');
+
+            loadTimelineMedia();
             renderSpots();
             renderTimeline('all');
         });
+
+        function loadTimelineMedia() {
+            const saved = localStorage.getItem('hk_tea_timeline_media');
+            if (saved) {
+                try {
+                    const mediaMap = JSON.parse(saved);
+                    timelineData.forEach(item => {
+                        if (mediaMap[item.id]) {
+                            item.media = mediaMap[item.id];
+                        }
+                    });
+                } catch(e) {}
+            }
+        }
+
+        function saveTimelineMedia() {
+            const mediaMap = {};
+            timelineData.forEach(item => {
+                if (item.media && item.media.length > 0) {
+                    mediaMap[item.id] = item.media;
+                }
+            });
+            localStorage.setItem('hk_tea_timeline_media', JSON.stringify(mediaMap));
+        }
 
         function renderSpots() {
             const container = document.getElementById('spots-grid');
@@ -349,7 +383,7 @@
                     mediaHtml = `
                         <div class="relative w-full aspect-[3/4] bg-stone-900 rounded-xl overflow-hidden mt-3" id="slider-${item.id}">
                             <div class="absolute inset-0 flex items-center transition-transform duration-300 ease-out slider-track-${item.id}" style="display: flex;">
-                                ${item.media.map((m) => {
+                                ${item.media.map((m, idx) => {
                                     const mUrl = formatImgPath(m.url);
                                     return `
                                     <div class="w-full h-full shrink-0 relative flex items-center justify-center bg-black">
@@ -358,6 +392,7 @@
                                         ` : `
                                             <img src="${mUrl}" alt="media" class="w-full h-full object-cover">
                                         `}
+                                        <button onclick="deleteTimelineMedia('${item.id}',${idx})" class="absolute top-2 right-2 bg-black/70 text-white text-[10px] px-2 py-1 rounded-md z-20">삭제</button>
                                     </div>
                                     `;
                                 }).join('')}
@@ -382,6 +417,9 @@
                             <span class="text-xs font-bold px-2.5 py-1.5 rounded-lg ${item.bg} tracking-tight whitespace-nowrap">
                                 📅 ${item.day} &nbsp;|&nbsp; ⏰ ${item.time}
                             </span>
+                            <button onclick="triggerTimelineMediaUpload('${item.id}')" title="사진/동영상 추가" class="w-10 h-10 bg-emerald-50 text-emerald-800 font-medium rounded-xl border border-emerald-200 active:bg-emerald-100 transition flex items-center justify-center text-base shrink-0 touch-btn">
+                                📷
+                            </button>
                         </div>
                         <div>
                             <h4 class="font-bold text-stone-900 text-sm mb-1">${item.title}</h4>
@@ -414,6 +452,49 @@
             const indicator = document.getElementById(`indicator-${itemId}`);
             if (indicator) {
                 indicator.innerText = `${idx + 1} / ${item.media.length}`;
+            }
+        }
+
+        function triggerTimelineMediaUpload(id) {
+            selectedTimelineIdForMedia = id;
+            document.getElementById('global-timeline-media-input').click();
+        }
+
+        function handleTimelineMediaUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0 || !selectedTimelineIdForMedia) return;
+
+            const targetItem = timelineData.find(t => t.id === selectedTimelineIdForMedia);
+            if (!targetItem) return;
+
+            if (!targetItem.media) targetItem.media = [];
+
+            let processedCount = 0;
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const isVideo = file.type.startsWith('video');
+                    targetItem.media.push({
+                        type: isVideo ? 'video' : 'image',
+                        url: e.target.result
+                    });
+                    processedCount++;
+                    if (processedCount === files.length) {
+                        saveTimelineMedia();
+                        renderTimeline(document.querySelector('.day-btn.bg-\\[\\#2a3630\\]')?.getAttribute('data-day') || 'all');
+                        event.target.value = '';
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function deleteTimelineMedia(itemId, mediaIdx) {
+            const item = timelineData.find(t => t.id === itemId);
+            if (item && item.media) {
+                item.media.splice(mediaIdx, 1);
+                saveTimelineMedia();
+                renderTimeline(document.querySelector('.day-btn.bg-\\[\\#2a3630\\]')?.getAttribute('data-day') || 'all');
             }
         }
 
