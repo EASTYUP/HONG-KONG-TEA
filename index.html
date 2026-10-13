@@ -35,7 +35,7 @@
 </head>
 <body class="antialiased min-h-screen pb-28">
 
-    <!-- Mobile Compact Header Section -->
+    <!-- Header Section -->
     <header class="bg-[#2a3630] text-white pt-8 pb-10 px-5 relative overflow-hidden">
         <div class="max-w-md mx-auto text-center relative z-10">
             <span class="inline-block px-3 py-1 bg-emerald-900/60 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold tracking-wider uppercase rounded-full mb-2">
@@ -71,7 +71,7 @@
         </div>
     </header>
 
-    <!-- Main Mobile Container -->
+    <!-- Main Container -->
     <main class="max-w-md mx-auto px-4 pt-6 relative z-20 space-y-6">
 
         <!-- SECTION 1: 주요 스팟 카드 -->
@@ -143,7 +143,15 @@
     <input type="file" id="global-timeline-media-input" accept="image/*,video/*" multiple class="hidden" onchange="handleTimelineMediaUpload(event)">
 
     <script>
-        // 1. 스팟 데이터 (이미지 파일 경로 방식)
+        // 이미지 경로 정제 함수 (폴더 경로 보장)
+        function formatImgPath(path) {
+            if (!path) return 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80';
+            if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) return path;
+            if (path.startsWith('images/')) return path;
+            return 'images/' + path;
+        }
+
+        // 1. 스팟 데이터
         const spotsData = [
             {
                 id: "spot-1",
@@ -151,7 +159,7 @@
                 tag: "침사추이 / 보이차 & 육보차",
                 desc: "홍콩에서 차를 구매하고 싶다면 꼭 방문해야 할 곳. 사고 싶은 차를 마셔보고 결정할 수 있으며 직원분들의 친절한 설명이 인상적인 곳입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E6%A8%82%E8%99%9F%E8%8C%B6%E8%8F%AF+852Teahouse+Tsim+Sha+Tsui",
-                img: "images/37.jpg"
+                img: "37.jpg"
             },
             {
                 id: "spot-2",
@@ -159,7 +167,7 @@
                 tag: "삼수이포 / 차도구 & 빈티지 차",
                 desc: "차를 좋아하는 사람이라면 강력 추천하는 공간. 수많은 종류의 차와 오래된 차도구 컬렉션을 만날 수 있습니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=SUM+FONG+TEA+HOUSE+%E6%B2%81%E8%8A%B3%E8%8C%B6%E6%8F%BF+Sham+Shui+Po",
-                img: "images/17.jpg"
+                img: "17.jpg"
             },
             {
                 id: "spot-3",
@@ -167,7 +175,7 @@
                 tag: "센트럴 / 노포 차장",
                 desc: "오랜 역사와 전통을 자랑하는 홍콩 센트럴의 대표 노포 차장. 고풍스러운 차통과 전통 차 문화를 느낄 수 있는 곳입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Ngan+Ki+Heung+Tea+Co+%E9%A1%8F%E5%A5%87%E9%A6%99%E8%8C%B6%E8%8A%8A+Central+Hong+Kong",
-                img: "images/44.jpg"
+                img: "44.jpg"
             },
             {
                 id: "spot-4",
@@ -175,7 +183,7 @@
                 tag: "상완 / 노포 차장",
                 desc: "홍콩 현지 다방 및 찻집에 차를 공급해온 유서 깊은 차장. 전통 차 포장과 깊은 차 향을 체험할 수 있습니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Cheung+Hing+Tea+Hong+%E7%A5%A5%E8%88%88%E8%8C%B6%E8%A1%8C+Sheung+Wan",
-                img: "images/28.jpg"
+                img: "28.jpg"
             },
             {
                 id: "spot-5",
@@ -183,7 +191,7 @@
                 tag: "센트럴 / 차도구 박물관",
                 desc: "홍콩 공원 내에 위치한 차도구 박물관 (다구문물관). 역사 깊은 자사호와 중국 전통 차도구 컬렉션이 전시되어 있습니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Flagstaff+House+Museum+of+Tea+Ware+Central+Hong+Kong",
-                img: "images/45.jpg"
+                img: "45.jpg"
             },
             {
                 id: "spot-6",
@@ -191,7 +199,7 @@
                 tag: "구룡베이 / 수공예 도자기 공방",
                 desc: "1928년에 설립된 홍콩 최초의 핸드페인트 도자기 공방. 정교한 도자기 차구와 화려한 홍콩 전통 문양 차기를 만날 수 있는 곳입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Yuet+Tung+China+Works+Kowloon+Bay",
-                img: "images/14.jpg"
+                img: "14.jpg"
             },
             {
                 id: "spot-7",
@@ -199,7 +207,7 @@
                 tag: "홍콩 섬 / 로컬 문화 & 트램",
                 desc: "역사적인 노포 차장들과 트램, 센트럴 헐리우드 로드의 차도구 샵들이 밀집된 홍콩 차 문화의 핵심 구역입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Central+Hong+Kong",
-                img: "images/46.jpg"
+                img: "46.jpg"
             },
             {
                 id: "spot-8",
@@ -207,7 +215,7 @@
                 tag: "구룡반도 / 야경 & 차 매장",
                 desc: "아름다운 빅토리아 하버 야경과 함께 다양한 차 전문점, 찻집들이 정겨운 홍콩의 대표적인 번화가입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Tsim+Sha+Tsui+Hong+Kong",
-                img: "images/32.jpg"
+                img: "32.jpg"
             },
             {
                 id: "spot-9",
@@ -215,7 +223,7 @@
                 tag: "구룡반도 / 로컬 스트리트 & 시장",
                 desc: "홍콩의 열기 넘치는 로컬 거리와 주방용품 거리, 차도구 및 전통 생활용품 시장을 둘러보기 좋은 지역입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Mong+Kok+Hong+Kong",
-                img: "images/1.jpg"
+                img: "1.jpg"
             },
             {
                 id: "spot-10",
@@ -223,21 +231,21 @@
                 tag: "외곽 섬 / 자전거 휴식 & 해산물",
                 desc: "페리를 타고 다녀온 정겨운 외곽 섬. 자전거를 타고 섬을 둘러보며 휴식을 취하고 맛있는 새우 완탕면을 맛본 곳입니다.",
                 map: "https://www.google.com/maps/search/?api=1&query=Cheung+Chau+Island+Hong+Kong",
-                img: "images/4.jpg"
+                img: "4.jpg"
             }
         ];
 
-        // 2. 타임라인 데이터 (작성해주신 이미지 파일 경로 반영)
+        // 2. 타임라인 데이터
         let timelineData = [
             { id: "t-1", day: "8/15", time: "PM 05:20", title: "공항 도착", desc: "인천국제공항 도착 및 탑승 수속", icon: "✈️", bg: "bg-blue-50 text-blue-700", media: [] },
-            { id: "t-2", day: "8/15", time: "PM 08:05", title: "티웨이 항공 출국", desc: "인천(ICN) ➔ 홍콩(HKG) 출발", icon: "🛫", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "images/47.jpg" }] },
-            { id: "t-3", day: "8/15", time: "PM 11:30", title: "홍콩 국제공항 도착", desc: "홍콩 도착 후 숙소 이동 준비", icon: "🛬", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "images/48.jpg" }] },
-            { id: "t-4", day: "8/16", time: "AM 12:30", title: "Kung-Fu Hostel 체크인", desc: "숙소 도착 및 체크인 후 휴식", icon: "🏨", bg: "bg-stone-100 text-stone-700", media: [{ type: "image", url: "images/24.jpg" }] },
-            { id: "t-5", day: "8/16", time: "AM 08:00", title: "아침 식사", desc: "홍콩식 우육면과 시원한 아이스 레몬티(凍檸茶)", icon: "🍜", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "images/25.jpg" }] },
-            { id: "t-6", day: "8/16", time: "AM 09:00", title: "센트럴 탐방 & 트램 탑승", desc: "센트럴 거리 구경 및 트램 타고 본격적인 찻집 투어 시작", icon: "🚃", bg: "bg-emerald-50 text-emerald-800", media: [{ type: "image", url: "images/26.jpg" }] },
-            { id: "t-7", day: "8/16", time: "AM 10:00", title: "Ngan Ki Heung Tea Co. 방문", desc: "顏奇香茶莊 노포 차장 탐방 및 차 구경", icon: "🍵", bg: "bg-emerald-100 text-emerald-900", media: [{ type: "image", url: "images/27.jpg" }] },
-            { id: "t-8", day: "8/16", time: "AM 11:00", title: "Cheung Hing Tea Hong 방문", desc: "祥興茶行 노포 차장 탐방", icon: "🍵", bg: "bg-emerald-100 text-emerald-900", media: [{ type: "image", url: "images/30.jpg" }] },
-            { id: "t-9", day: "8/16", time: "PM 12:00", title: "Flagstaff House 차도구 박물관 관람", desc: "홍콩 공원 내 다구문물관에서 자사호 및 다구 관람", icon: "🏛️", bg: "bg-purple-50 text-purple-800", media: [{ type: "image", url: "images/45.jpg" }] },
+            { id: "t-2", day: "8/15", time: "PM 08:05", title: "티웨이 항공 출국", desc: "인천(ICN) ➔ 홍콩(HKG) 출발", icon: "🛫", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "47.jpg" }] },
+            { id: "t-3", day: "8/15", time: "PM 11:30", title: "홍콩 국제공항 도착", desc: "홍콩 도착 후 숙소 이동 준비", icon: "🛬", bg: "bg-blue-50 text-blue-700", media: [{ type: "image", url: "48.jpg" }] },
+            { id: "t-4", day: "8/16", time: "AM 12:30", title: "Kung-Fu Hostel 체크인", desc: "숙소 도착 및 체크인 후 휴식", icon: "🏨", bg: "bg-stone-100 text-stone-700", media: [{ type: "image", url: "24.jpg" }] },
+            { id: "t-5", day: "8/16", time: "AM 08:00", title: "아침 식사", desc: "홍콩식 우육면과 시원한 아이스 레몬티(凍檸茶)", icon: "🍜", bg: "bg-amber-50 text-amber-800", media: [{ type: "image", url: "25.jpg" }] },
+            { id: "t-6", day: "8/16", time: "AM 09:00", title: "센트럴 탐방 & 트램 탑승", desc: "센트럴 거리 구경 및 트램 타고 본격적인 찻집 투어 시작", icon: "🚃", bg: "bg-emerald-50 text-emerald-800", media: [{ type: "image", url: "26.jpg" }] },
+            { id: "t-7", day: "8/16", time: "AM 10:00", title: "Ngan Ki Heung Tea Co. 방문", desc: "顏奇香茶莊 노포 차장 탐방 및 차 구경", icon: "🍵", bg: "bg-emerald-100 text-emerald-900", media: [{ type: "image", url: "27.jpg" }] },
+            { id: "t-8", day: "8/16", time: "AM 11:00", title: "Cheung Hing Tea Hong 방문", desc: "祥興茶行 노포 차장 탐방", icon: "🍵", bg: "bg-emerald-100 text-emerald-900", media: [{ type: "image", url: "30.jpg" }] },
+            { id: "t-9", day: "8/16", time: "PM 12:00", title: "Flagstaff House 차도구 박물관 관람", desc: "홍콩 공원 내 다구문물관에서 자사호 및 다구 관람", icon: "🏛️", bg: "bg-purple-50 text-purple-800", media: [{ type: "image", url: "45.jpg" }] },
             { id: "t-10", day: "8/16", time: "PM 01:00", title: "점심 식사 (딤섬)", desc: "홍콩 정통 딤섬으로 점심 식사", icon: "🥟", bg: "bg-amber-50 text-amber-800", media: [] },
             { id: "t-11", day: "8/16", time: "PM 03:00", title: "빅토리아 피크 (Victoria Peak)", desc: "빅토리아 피크 방문하여 홍콩 전경 관람", icon: "⛰️", bg: "bg-emerald-50 text-emerald-800", media: [] },
             { id: "t-12", day: "8/16", time: "PM 05:00", title: "숙소 복귀", desc: "숙소 도착 후 잠시 짐 풀기 및 휴식", icon: "🏨", bg: "bg-stone-100 text-stone-700", media: [] },
@@ -271,12 +279,15 @@
         let selectedTimelineIdForMedia = null;
 
         window.addEventListener('DOMContentLoaded', () => {
+            // 오래된 데이터 초기화
+            localStorage.removeItem('hk_tea_spots_data');
+            localStorage.removeItem('hk_tea_timeline_data');
+
             loadTimelineMedia();
             renderSpots();
             renderTimeline('all');
         });
 
-        // 타임라인 미디어는 브라우저 localStorage에 안전하게 유지
         function loadTimelineMedia() {
             const saved = localStorage.getItem('hk_tea_timeline_media');
             if (saved) {
@@ -303,15 +314,19 @@
 
         function renderSpots() {
             const container = document.getElementById('spots-grid');
+            if (!container) return;
             container.innerHTML = '';
 
             spotsData.forEach((spot) => {
                 const card = document.createElement('div');
                 card.className = "bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm flex flex-col justify-between";
+                
+                const imgSrc = formatImgPath(spot.img);
+
                 card.innerHTML = `
                     <div>
                         <div class="relative w-full aspect-[3/4] bg-stone-100 overflow-hidden">
-                            <img src="${spot.img}" alt="${spot.name}" class="w-full h-full object-cover">
+                            <img src="${imgSrc}" alt="${spot.name}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80'">
                         </div>
                         <div class="p-4">
                             <span class="inline-block text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md mb-1.5">
@@ -341,17 +356,18 @@
 
             [navSpots, navTimeline].forEach(btn => btn?.classList.remove('active-tab'));
 
-            if (tabName === 'spots') {
+            if (tabName === 'spots' && sectionSpots) {
                 sectionSpots.scrollIntoView({ behavior: 'smooth' });
-                navSpots.classList.add('active-tab');
-            } else if (tabName === 'timeline') {
+                navSpots?.classList.add('active-tab');
+            } else if (tabName === 'timeline' && sectionTimeline) {
                 sectionTimeline.scrollIntoView({ behavior: 'smooth' });
-                navTimeline.classList.add('active-tab');
+                navTimeline?.classList.add('active-tab');
             }
         }
 
         function renderTimeline(filterDayVal) {
             const container = document.getElementById('timeline-container');
+            if (!container) return;
             container.innerHTML = '';
 
             const items = filterDayVal === 'all' 
@@ -367,21 +383,24 @@
                     mediaHtml = `
                         <div class="relative w-full aspect-[3/4] bg-stone-900 rounded-xl overflow-hidden mt-3" id="slider-${item.id}">
                             <div class="absolute inset-0 flex items-center transition-transform duration-300 ease-out slider-track-${item.id}" style="display: flex;">
-                                ${item.media.map((m, idx) => `
+                                ${item.media.map((m, idx) => {
+                                    const mUrl = formatImgPath(m.url);
+                                    return `
                                     <div class="w-full h-full shrink-0 relative flex items-center justify-center bg-black">
                                         ${m.type === 'video' ? `
-                                            <video src="${m.url}" controls class="w-full h-full object-contain"></video>
+                                            <video src="${mUrl}" controls class="w-full h-full object-contain"></video>
                                         ` : `
-                                            <img src="${m.url}" alt="media" class="w-full h-full object-cover">
+                                            <img src="${mUrl}" alt="media" class="w-full h-full object-cover">
                                         `}
-                                        <button onclick="deleteTimelineMedia('${item.id}',${idx})" class="absolute top-2 right-2 bg-black/70 text-white text-[10px] px-2 py-1 rounded-md">삭제</button>
+                                        <button onclick="deleteTimelineMedia('${item.id}',${idx})" class="absolute top-2 right-2 bg-black/70 text-white text-[10px] px-2 py-1 rounded-md z-20">삭제</button>
                                     </div>
-                                `).join('')}
+                                    `;
+                                }).join('')}
                             </div>
                             ${item.media.length > 1 ? `
-                                <button onclick="slideMedia('${item.id}', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs">◀</button>
-                                <button onclick="slideMedia('${item.id}', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs">▶</button>
-                                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full" id="indicator-${item.id}">
+                                <button onclick="slideMedia('${item.id}', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs z-20">◀</button>
+                                <button onclick="slideMedia('${item.id}', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs z-20">▶</button>
+                                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full z-20" id="indicator-${item.id}">
                                     1 / ${item.media.length}
                                 </div>
                             ` : ''}
